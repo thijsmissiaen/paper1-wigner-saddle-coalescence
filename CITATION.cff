@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this mathematical manuscript or verification software, please cite it as below."
+authors:
+  - family-names: "Missiaen"
+    given-names: "Thijs"
+    affiliation: "Independent Researcher, Belgium"
+    email: "thijs.missiaen@gmail.com"
+title: "Wigner Phase-Space Representation and Complex Saddle-Point Coalescence in the Transverse Wronskian of Riemann's Xi-Function"
+version: "1.0.0"
+date-released: "2026-10-25"
+url: "https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence"
+repository-code: "https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence"
+license: "MIT"
+keywords:
+  - "Riemann Xi-function"
+  - "Jacobi theta kernel"
+  - "transverse Wronskian"
+  - "Wigner phase-space distribution"
+  - "Hudson theorem"
+  - "complex saddle-point coalescence"
+  - "steepest descent"

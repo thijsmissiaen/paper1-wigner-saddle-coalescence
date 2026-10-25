@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "paper1-wigner-saddle-coalescence",
+  "title": "Wigner Phase-Space Representation and Complex Saddle-Point Coalescence in the Transverse Wronskian of Riemann's Xi-Function",
+  "author": "Thijs Missiaen",
+  "affiliation": "Independent Researcher, Belgium",
+  "date": "2026-10-25",
+  "repository_url": "https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence",
+  "skill_path": ".agents/skills/wigner-saddle-coalescence-xi/SKILL.md",
+  "manuscript": {
+    "tex_path": "paper/paper1_wigner_saddle_coalescence.tex",
+    "pdf_path": "paper/paper1_wigner_saddle_coalescence.pdf",
+    "figures": [
+      "paper/figures/fig1_wigner_saddle_coalescence.pdf",
+      "paper/figures/fig1_wigner_saddle_coalescence.png",
+      "paper/figures/fig2_cauchy_contour_and_karlin_lever.pdf",
+      "paper/figures/fig2_cauchy_contour_and_karlin_lever.png"
+    ]
+  },
+  "verification": {
+    "script_path": "scripts/verify_paper1_wigner_saddle_coalescence.py",
+    "precision_decimal_places": 60,
+    "dependencies": ["mpmath", "numpy", "scipy", "matplotlib"]
+  },
+  "canonical_constants": {
+    "holomorphic_u_strip_radius": "pi/8 = 0.39269908169872415",
+    "holomorphic_x_strip_radius": "pi/4 = 0.78539816339744831",
+    "first_riemann_zero_gamma1": "14.1347251417346937904572519835624702707842571156992431756855",
+    "exact_pitchfork_coalescence_yc_2gamma1": "0.432020530305680704381066352456",
+    "exact_saddle_height_etac_2gamma1": "0.602715023857425736790419515415",
+    "inner_asymptotic_coalescence_2gamma1": "0.405378739660722366064538111347",
+    "lobe_ratio_real_axis_2gamma1": 1.002308,
+    "lobe_ratio_shifted_contour_2gamma1": 2547.9547,
+    "lobe_ratio_coalesced_gamma1": 1.547e11
+  },
+  "proven_theorems": [
+    {
+      "id": "THM-1.1",
+      "name": "Wigner--Hudson Phase-Space Identity and Zero-Marginal Law",
+      "formula_latex": "I(y,t) = \\int_{-\\infty}^{\\infty} \\Phi\\!\\left(\\frac{x+y}{2}\\right)\\Phi\\!\\left(\\frac{x-y}{2}\\right)\\cos(tx)\\,\\mathrm{d}x = 2\\pi\\,\\mathcal{W}_{\\Phi}(y, 2t), \\qquad \\int_{-\\infty}^{\\infty} I(y,\\gamma_k)\\,\\mathrm{d}y = 2|\\Xi(\\gamma_k)|^2 = 0"
+    },
+    {
+      "id": "PROP-3.2",
+      "name": "Double-Exponential Vertical Cauchy Wall Decay in |Im(x)| < pi/4",
+      "formula_latex": "|G_y(\\pm L + \\mathrm{i}\\tau)| \\le 16\\pi^4 \\mathrm{e}^{9L}\\exp\\!\\Big(-2\\pi\\cosh(2y)\\,\\mathrm{e}^{2L}\\cos(2\\eta)\\Big) \\quad (0 \\le \\tau \\le \\eta < \\pi/4)"
+    },
+    {
+      "id": "PROP-3.3",
+      "name": "Hermitian Contour Symmetry and Imaginary-Axis Positivity",
+      "formula_latex": "G_y(-\\xi + \\mathrm{i}\\eta) = \\overline{G_y(\\xi + \\mathrm{i}\\eta)}, \\qquad G_y(\\mathrm{i}\\eta) = \\left|\\Phi\\!\\left(\\frac{y+\\mathrm{i}\\eta}{2}\\right)\\right|^2 \\ge 0"
+    },
+    {
+      "id": "THM-4.2",
+      "name": "Exact Pitchfork Saddle-Point Coalescence on the Imaginary Axis",
+      "formula_latex": "\\partial_x \\ln G_y(\\mathrm{i}\\eta) = -\\mathrm{i}\\partial_\\eta \\ln G_y(\\mathrm{i}\\eta), \\qquad \\partial_\\xi^2 \\ln G_y(\\mathrm{i}\\eta_*) = -\\partial_\\eta^2 \\ln G_y(\\mathrm{i}\\eta_*) < 0 \\quad (|y| \\ge y_c(\\omega))"
+    }
+  ]
+}
