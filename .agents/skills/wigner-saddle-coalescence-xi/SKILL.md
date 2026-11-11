@@ -17,21 +17,33 @@ This skill records the canonical normalizations, contour identities, conditional
 
 ## 1. Canonical Definitions and Mirror Autocorrelation
 
-1. **Completed Riemann $\Xi$-Function and Jacobi-Theta Kernel $\Phi(u)$:**
-   With $s = \frac{1}{2} + d + \mathrm{i}t$ and $z = t - \mathrm{i}d$,
+### 1.1 Completed Riemann $\Xi$-Function and Jacobi-Theta Kernel $\Phi(u)$
 
-$$\Xi(t-\mathrm{i}d) = 8\int_0^\infty \Phi(u)\cos\bigl(2(t-\mathrm{i}d)u\bigr) \mathrm{d}u = 4\int _ {-\infty}^\infty \Phi(u) \mathrm{e}^{2(d + \mathrm{i}t) u} \mathrm{d}u,$$
+With $s = \frac{1}{2} + d + \mathrm{i}t$ and $z = t - \mathrm{i}d$,
 
-$$\Phi(u) = \sum _ {n=1}^\infty \left(2\pi^2 n^4 \mathrm{e}^{9u} - 3\pi n^2 \mathrm{e}^{5u}\right)\exp\left(-\pi n^2 \mathrm{e}^{4u}\right).$$
+$$
+\Xi(t-\mathrm{i}d) = 8\int_0^\infty \Phi(u)\cos\bigl(2(t-\mathrm{i}d)u\bigr) \mathrm{d}u = 4\int _ {-\infty}^\infty \Phi(u) \mathrm{e}^{2(d + \mathrm{i}t) u} \mathrm{d}u,
+$$
 
-2. **Canonical Wigner Scaling ($x = u+v, y = u-v$):**
-   With the standard Wigner distribution $\mathcal{W} _ \Phi(q,p) := \frac{1}{2\pi}\int _ {\mathbb{R}}\Phi(q+\frac{x}{2})\Phi(q-\frac{x}{2})\mathrm{e}^{-\mathrm{i}px} \mathrm{d}x$,
+$$
+\Phi(u) = \sum _ {n=1}^\infty \left(2\pi^2 n^4 \mathrm{e}^{9u} - 3\pi n^2 \mathrm{e}^{5u}\right)\exp\left(-\pi n^2 \mathrm{e}^{4u}\right).
+$$
 
-$$I(y,t) := \int _ {-\infty}^\infty \Phi\left(\frac{x+y}{2}\right)\Phi\left(\frac{x-y}{2}\right)\cos(2t x) \mathrm{d}x = 2\pi \mathcal{W} _ \Phi\left(\frac{y}{2}, 2t\right),$$
+### 1.2 Canonical Wigner Scaling ($x = u+v, y = u-v$)
 
-$$\lvert\Xi(t-\mathrm{i}d)\rvert^2 = 16\int_0^\infty \cosh(2d y) I(y,t) \mathrm{d}y, \qquad W(d,t) = 16\int_0^\infty y\sinh(2d y) I(y,t) \mathrm{d}y,$$
+With the standard Wigner distribution $\mathcal{W} _ \Phi(q,p) := \frac{1}{2\pi}\int _ {\mathbb{R}}\Phi(q+\frac{x}{2})\Phi(q-\frac{x}{2})\mathrm{e}^{-\mathrm{i}px} \mathrm{d}x$,
 
-$$\widetilde{W}(d,t) := \frac{W(d,t)}{d} = 32\int_0^\infty y^2 \frac{\sinh(2d y)}{2d y} I(y,t) \mathrm{d}y.$$
+$$
+I(y,t) := \int _ {-\infty}^\infty \Phi\left(\frac{x+y}{2}\right)\Phi\left(\frac{x-y}{2}\right)\cos(2t x) \mathrm{d}x = 2\pi \mathcal{W} _ \Phi\left(\frac{y}{2}, 2t\right),
+$$
+
+$$
+\lvert\Xi(t-\mathrm{i}d)\rvert^2 = 16\int_0^\infty \cosh(2d y) I(y,t) \mathrm{d}y, \qquad W(d,t) = 16\int_0^\infty y\sinh(2d y) I(y,t) \mathrm{d}y,
+$$
+
+$$
+\widetilde{W}(d,t) := \frac{W(d,t)}{d} = 32\int_0^\infty y^2 \frac{\sinh(2d y)}{2d y} I(y,t) \mathrm{d}y.
+$$
 
 ## 2. Shifted Contours, Local Coalescence, and Critical Pitfalls to Avoid
 
