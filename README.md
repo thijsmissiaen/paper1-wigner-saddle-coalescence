@@ -1,87 +1,54 @@
-# Wigner Phase-Space Representation and Complex Saddle-Point Coalescence in the Transverse Wronskian of Riemann's $\Xi$-Function
+# Wigner Phase-Space Representation, Shifted Cauchy Contours, and Local Saddle-Point Coalescence in the Transverse Wronskian of Riemann's $\Xi$-Function
 
-**Author:** Thijs Missiaen (Independent Researcher, Belgium)  
-**Repository:** [`https://github.com/thijsmissiaen/thijsmissiaen/tree/main/papers/paper1-wigner-saddle-coalescence`](https://github.com/thijsmissiaen/thijsmissiaen/tree/main/papers/paper1-wigner-saddle-coalescence)  
-**Manuscript:** [`paper/paper1_wigner_saddle_coalescence.pdf`](./paper/paper1_wigner_saddle_coalescence.pdf) (AMS-LaTeX source: [`paper/paper1_wigner_saddle_coalescence.tex`](./paper/paper1_wigner_saddle_coalescence.tex))  
+**DOI (Zenodo / CERN):** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23637324.svg)](https://doi.org/10.5281/zenodo.23637324) [`10.5281/zenodo.23637324`](https://doi.org/10.5281/zenodo.23637324)  
+**Author:** Thijs Missiaen (Independent Researcher, Belgium) &middot; **ORCID:** [`0009-0007-3678-0810`](https://orcid.org/0009-0007-3678-0810)  
+**Repository:** [`https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence`](https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence)  
+**Manuscript:** [`paper/paper1_wigner_saddle_coalescence.pdf`](./paper/paper1_wigner_saddle_coalescence.pdf) (10 pages; AMS-LaTeX source: [`paper/paper1_wigner_saddle_coalescence.tex`](./paper/paper1_wigner_saddle_coalescence.tex))  
 **Verification Script:** [`scripts/verify_paper1_wigner_saddle_coalescence.py`](./scripts/verify_paper1_wigner_saddle_coalescence.py) (60-decimal `mpmath` + 300-DPI figure generator)
 
 ---
 
-## Abstract and Mathematical Overview
+> [!NOTE]
+> **Scope and Analytical Distinction:** This note separates (i) exact Wigner autocorrelation and Cauchy contour identities for $W(d,t) = \frac{1}{2}\partial_d\lvert\Xi(t-\mathrm{i}d)\rvert^2$, (ii) the conditional local normal form for complex stationary-point coalescence away from zeros of $\Phi(u)$, and (iii) explicit obstructions inside $\lvert\mathrm{Im}(z)\rvert < \pi/4$ (strip zeros of $\Phi(u)$ creating logarithmic branch points in $\ln G_y(z)$, multi-crossing oscillations of $I(y,\gamma_k)$ for $k \ge 3$, and Davenport–Heilbronn counterexamples). Shifting a horizontal contour preserves the net integral $I(y,t)$ identically by Cauchy's theorem while improving $L^1$ quadrature conditioning.
 
-This repository contains the complete AMS-LaTeX manuscript, compiled academic PDF, high-resolution figures, and 60-decimal arbitrary-precision verification suite for Paper 1 of our study on the analytical and phase-space structure of Riemann's Jacobi-theta kernel $\Phi(u)$.
+## Abstract and Mathematical Summary
 
-We prove that the inner correlation integral $I(y,t)$ governing the transverse Wronskian $W(d,t) = \frac{1}{2}\partial_d\lvert\Xi(t-\mathrm{i}d)\rvert^2$ of Riemann's completed $\Xi$-function is proportional to the quantum-mechanical Wigner phase-space distribution $\mathcal{W}_\Phi(y, 2t)$ of the kernel $\Phi(u)$, and that its $99.77\%$ real-axis Fourier cancellation at $t = \gamma_1$ is eliminated by shifting the integration contour into the holomorphic strip $\lvert\mathrm{Im}(x)\rvert < \pi/4$.
+We study the phase-space and complex-contour structure of the transverse Wronskian $W(d,t) = \frac{1}{2}\partial_d\lvert\Xi(t-\mathrm{i}d)\rvert^2$ of Riemann's completed zeta function $\Xi(t-\mathrm{i}d) = \xi(\frac{1}{2}+d+\mathrm{i}t)$.
 
-### Main Analytical Results (Theorem 1.1 & Theorem 4.2)
+1. **Canonical Wigner Representation and Zero-Marginal Identity:**  
+   In mirror coordinates $x = u + v$ and $y = u - v$, the transverse Wronskian and its parity-reduced counterpart $\widetilde{W}(d,t) = W(d,t)/d$ satisfy the exact canonical identities
 
-1. **Wigner–Hudson Phase-Space Representation and Zero-Marginal Identity:**  
-   In mirror coordinates $x = u + v$ and $y = u - v$, the transverse Wronskian and its even parity-reduced counterpart $\widetilde{W}(d,t) = W(d,t)/d$ take the exact form
+$$W(d,t) = 16\int_0^\infty y\sinh(2d y) I(y,t) \mathrm{d}y, \qquad \widetilde{W}(d,t) = 32\int_0^\infty y^2 \frac{\sinh(2d y)}{2d y} I(y,t) \mathrm{d}y,$$
 
-   $$W(d,t) = \frac{1}{2}\int_0^\infty y\sinh(d y)\,I(y,t)\,\mathrm{d}y, \qquad \widetilde{W}(d,t) = \frac{1}{2}\int_0^\infty y^2\,\frac{\sinh(d y)}{d y}\,I(y,t)\,\mathrm{d}y,$$
+   where $I(y,t)$ is proportional to the standard quantum-mechanical Wigner distribution $\mathcal{W} _ \Phi(q,p) = \frac{1}{2\pi}\int _ {\mathbb{R}}\Phi(q+\frac{x}{2})\Phi(q-\frac{x}{2})\mathrm{e}^{-\mathrm{i}px} \mathrm{d}x$ evaluated at $(q,p) = (y/2, 2t)$:
 
-   where the inner correlation integral is given by
+$$I(y,t) := \int _ {-\infty}^\infty \Phi\left(\frac{x+y}{2}\right)\Phi\left(\frac{x-y}{2}\right)\cos(2t x) \mathrm{d}x = 2\pi \mathcal{W} _ \Phi\left(\frac{y}{2}, 2t\right).$$
 
-   $$I(y,t) = \int_{-\infty}^\infty \Phi\left(\frac{x+y}{2}\right)\Phi\left(\frac{x-y}{2}\right)\cos(t x)\,\mathrm{d}x = 2\pi\,\mathcal{W}_\Phi(y, 2t).$$
+   At every real zero $\gamma_k$ of $\Xi$, $\int_0^\infty I(y,\gamma_k) \mathrm{d}y = \frac{1}{16}\lvert\Xi(\gamma_k)\rvert^2 = 0$, and Hudson's theorem (1974) implies that $I(y,t)$ changes sign in $\mathbb{R}^2$.
 
-   At every real zero $\gamma_k$ of $\Xi$, the marginal integral vanishes identically ($\int_{-\infty}^\infty I(y,\gamma_k)\,\mathrm{d}y = 2\lvert\Xi(\gamma_k)\rvert^2 = 0$), and Hudson's theorem (1974) implies that $I(y,t)$ must change sign in the $(y,t)$-plane because $\Phi(u)$ is non-Gaussian.
+2. **Holomorphic Strip $\lvert\mathrm{Im}(z)\rvert < \pi/4$, Contour Conditioning, and Strip Zeros of $\Phi(u)$:**  
+   Using $\Phi(u) = \frac{1}{16}(\partial_u^2 - 1)[\mathrm{e}^u\theta(\mathrm{e}^{4u})]$ and $\theta(\mathrm{e}^{-4u}) = \mathrm{e}^{2u}\theta(\mathrm{e}^{4u})$, $\Phi(-u) = \Phi(u)$ holds holomorphically on $\lvert\mathrm{Im}(u)\rvert < \pi/8$. On vertical walls $\xi = \pm L$, $G_y(z) = \Phi(\frac{z+y}{2})\Phi(\frac{z-y}{2})$ decays double-exponentially for $\lvert\eta\rvert < \pi/4$, whereas the defining series diverges on $\lvert\eta\rvert = \pi/4$ ($\cos 2\eta = 0$). Shifting the horizontal contour reduces the $L^1$ quadrature condition number $\kappa _ {\mathrm{quad}}$ at $(y,\omega) = (0.40, 2\gamma_1)$ from $867.6$ ($\eta = 0$) to $1.0008$ ($\eta = 0.50$) while keeping $I(0.40,\gamma_1)$ invariant. Crucially, $\Phi(u)$ has zeros inside $\lvert\mathrm{Im}(u)\rvert < \pi/8$ (including $u_0 = \mathrm{i}\tau_0$ with $\tau_0 \approx 0.3194150268$ and $u_1 \approx 0.1278237567 + 0.3477699161\mathrm{i}$), creating logarithmic branch points in $\ln G_y(z)$ inside $\mathcal{S} _ {\pi/4}$.
 
-2. **Holomorphic Strip $\lvert\mathrm{Im}(x)\rvert < \pi/4$, Vertical Wall Decay, and Hermitian Symmetry:**  
-   Using the Jacobi differential identity $\Phi(u) = \frac{1}{16}(\partial_u^2 - 1)[\mathrm{e}^u\theta(\mathrm{e}^{4u})]$ and the modular transformation $\theta(\mathrm{e}^{-4u}) = \mathrm{e}^{2u}\theta(\mathrm{e}^{4u})$, we prove $\Phi(-u) = \Phi(u)$ holomorphically inside $\lvert\mathrm{Im}(u)\rvert < \pi/8$ without non-holomorphic absolute values. On the vertical Cauchy walls $\xi = \pm L$, the convolution kernel $G_y(x) = \Phi(\frac{x+y}{2})\Phi(\frac{x-y}{2})$ decays double-exponentially as $\mathcal{O}(\mathrm{e}^{9L}\exp(-2\pi\cosh(2y)\mathrm{e}^{2L}\cos(2\eta)))$ for all $\lvert\eta\rvert < \pi/4$, whereas $\lvert\eta\rvert = \pi/4$ is a natural boundary where $\cos(2\eta) = 0$. Along any horizontal contour $x = \xi + \mathrm{i}\eta$, $G_y$ satisfies the exact Hermitian reflection symmetry
+3. **Local Saddle-Point Coalescence Normal Form and Explicit Obstructions:**  
+   Away from zeros of $\Phi(u)$, stationary points of $\ln G_y(z) + \mathrm{i}\omega z$ colliding at $(y_c, \mathrm{i}\eta_c)$ obey the local Weierstrass quadratic law $(z _ \star^\pm - \mathrm{i}\eta_c)^2 = K^2(y_c - y) + \mathcal{O}(\lvert y - y_c\rvert^{3/2})$ (rotating $90^\circ$ from horizontal off-axis pairs for $y < y_c$ to imaginary-axis roots for $y > y_c$; at $\omega = 2\gamma_1$, $y_c \approx 0.4320205303$, $\eta_c \approx 0.6027150239$, $K \approx 0.2991933645$). For $k \ge 3$, $I(y,\gamma_k)$ exhibits multiple sign changes ($5$ crossings at $\gamma_3$), and the entire Wigner representation applies unchanged to Davenport–Heilbronn kernels with off-critical zeros.
 
-   $$G_y(-\xi + \mathrm{i}\eta) = \overline{G_y(\xi + \mathrm{i}\eta)}, \qquad G_y(\mathrm{i}\eta) = \left\lvert\Phi\left(\frac{y+\mathrm{i}\eta}{2}\right)\right\rvert^2 \ge 0.$$
+---
 
-3. **Pitchfork Saddle-Point Coalescence and Elimination of Real-Axis Cancellation:**  
-   The complex stationary-phase points $x_*^\pm(y,\omega) = \pm\xi_*(y,\omega) + \mathrm{i}\eta_*(y,\omega)$ solving $\partial_x\ln G_y(x) + \mathrm{i}\omega = 0$ undergo a pitchfork bifurcation at $y_c(\omega)$ (at $\omega_1 = 2\gamma_1$: $y_c(2\gamma_1) \approx 0.4320205303$, $\eta_*(y_c,2\gamma_1) \approx 0.6027150239$). Near $(y_c, \eta_c)$, the holomorphic Taylor expansion yields the quadratic coalescence law
-
-   $$(\Delta z)^2 = \bigl(\xi_* + \mathrm{i}(\eta_* - \eta_c)\bigr)^2 = K^2(y_c - y) + \mathcal{O}\bigl(\lvert y - y_c\rvert^{3/2}\bigr), \qquad K = \sqrt{\frac{2\,\partial_y L_{y_c}'(\eta_c)}{-L_{y_c}'''(\eta_c)}} \approx 0.2991933645.$$
-
-   For $\lvert y\rvert \ge y_c(\omega)$, the conjugate saddle pair coalesces onto the imaginary axis $\xi_* = 0$ with strictly negative horizontal Hessian $\partial_\xi^2\ln G_y(\mathrm{i}\eta_*) < 0$. Shifting the contour from $\eta = 0$ to $\eta \in (0,\pi/4)$ raises the positive-to-negative lobe ratio $I_+ / \lvert I_-\rvert$ at $y = 0.40$ from $1.0023$ ($99.77\%$ cancellation) to $2547.95$ at $\omega = 2\gamma_1, \eta = 0.50$, and to $1.547 \times 10^{11}$ in the single-saddle coalesced regime ($\omega = \gamma_1, \eta = 0.18$).
-
-## Repository Structure
-
-```text
-paper1-wigner-saddle-coalescence/
-├── README.md
-├── CITATION.cff
-├── LICENSE
-├── AGENT_SKILL_MANIFEST.json
-├── .agents/
-│   └── skills/
-│       └── wigner-saddle-coalescence-xi/
-│           └── SKILL.md
-├── paper/
-│   ├── paper1_wigner_saddle_coalescence.tex
-│   ├── paper1_wigner_saddle_coalescence.pdf
-│   └── figures/
-│       ├── fig1_wigner_saddle_coalescence.png
-│       ├── fig1_wigner_saddle_coalescence.pdf
-│       ├── fig2_cauchy_contour_and_karlin_lever.png
-│       └── fig2_cauchy_contour_and_karlin_lever.pdf
-└── scripts/
-    └── verify_paper1_wigner_saddle_coalescence.py
-```
-
-## Reproducing the 60-Decimal Verification and Figures
-
-To run the complete 60-decimal `mpmath` verification suite and regenerate both 300-DPI figures (`PNG` and vector `PDF`):
+## Reproducing the Verification and Figures
 
 ```bash
 python scripts/verify_paper1_wigner_saddle_coalescence.py
 ```
 
-### Benchmark Summary Verified by `verify_paper1_wigner_saddle_coalescence.py`
-
 | Verification Step | Mathematical Quantity | Verified Value / Residual | Precision |
 | :--- | :--- | :--- | :--- |
-| **Step 1A** | Holomorphic parity $\lvert\Phi(u) - \Phi(-u)\rvert$ at $u = 0.28 + 0.19\mathrm{i}$ | $2.60591 \times 10^{-61}$ | $60$ dps |
-| **Step 1B** | Hermitian symmetry $\lvert G_y(-\xi+\mathrm{i}\eta) - \overline{G_y(\xi+\mathrm{i}\eta)}\rvert$ | $1.16682 \times 10^{-59}$ | $60$ dps |
-| **Step 2A** | Vertical Cauchy wall magnitude $\lvert G_y(3.0 + 0.55\mathrm{i})\rvert$ ($y = 0.40$) | $2.98538 \times 10^{-654}$ | $60$ dps |
-| **Step 2B** | Closed Cauchy rectangle residual $\lvert\oint_{\partial\mathcal{R}} G_y(z)\mathrm{e}^{\mathrm{i}\gamma_1 z}\,\mathrm{d}z\rvert$ | $3.58732 \times 10^{-43}$ | $38$ dps |
-| **Step 3** | Exact pitchfork coalescence threshold $y_c(2\gamma_1)$ and height $\eta_c$ | $y_c = 0.4320205303\dots, \eta_c = 0.6027150239\dots$ | $50$ dps |
-| **Step 4A** | Lobe dominance ratio $I_+ / \lvert I_-\rvert$ ($\omega = 2\gamma_1, y = 0.40, \eta = 0 \to 0.50$) | $1.0023 \to 2547.9547$ ($99.96\%$ net) | IEEE-754 |
-| **Step 4B** | Lobe dominance ratio $I_+ / \lvert I_-\rvert$ ($\omega = \gamma_1, y = 0.40, \eta = 0 \to 0.18$) | $1.8349 \to 1.547 \times 10^{11}$ ($100.00\%$ net) | IEEE-754 |
+| **Step 1A–B** | Holomorphic parity $\lvert\Phi(u) - \Phi(-u)\rvert$ & Hermitian symmetry | $2.61 \times 10^{-61}$, $1.17 \times 10^{-59}$ | $60$ dps |
+| **Step 1D** | Strip zeros of $\Phi(u)$ ($\tau_0 < \pi/8$, $\mathrm{Im}(u_1) < \pi/8$) | $\tau_0 = 0.3194150268\dots$, $2\mathrm{Im}(u_1) = 0.6955398322\dots$ | $60$ dps |
+| **Step 2B** | Closed Cauchy rectangle residual $\lvert\oint G_y(z)\mathrm{e}^{\mathrm{i}\gamma_1 z} \mathrm{d}z\rvert$ | $3.59 \times 10^{-43}$ | $38$ dps |
+| **Step 3** | Local coalescence point $(y_c(2\gamma_1), \eta_c(2\gamma_1))$ | $y_c = 0.4320205303\dots$, $\eta_c = 0.6027150239\dots$ | $50$ dps |
+| **Step 4A** | Quadrature condition number $\kappa _ {\mathrm{quad}}$ ($y=0.40, \eta = 0 \to 0.50$) | $867.6007 \to 1.0008$ (net $I = 1.76903968 \times 10^{-6}$) | IEEE-754 |
+| **Step 4C** | Canonical $W _ {\mathrm{Wig}}(0.20,\gamma_k) = 16\int y\sinh(2dy)I \mathrm{d}y$ vs. $W _ {\mathrm{CR}}$ | Max error $2.15 \times 10^{-54}$; $\lvert\int_0^\infty I \mathrm{d}y\rvert \le 1.54 \times 10^{-53}$ | $50$ dps |
 
 ## Citation
 
-If you use the analytical identities, contour bounds, or verification scripts from this repository in your research, please cite this work using the metadata in [`CITATION.cff`](./CITATION.cff).
+Please cite this work using the metadata in [`CITATION.cff`](./CITATION.cff).

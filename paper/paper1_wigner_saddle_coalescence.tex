@@ -23,6 +23,7 @@
 
 \numberwithin{equation}{section}
 \allowdisplaybreaks
+\emergencystretch=1.5em
 
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ii}{\mathrm{i}}
@@ -31,451 +32,317 @@
 \newcommand{\Ima}{\operatorname{Im}}
 \newcommand{\Wig}{\mathcal{W}}
 \newcommand{\Wtil}{\widetilde{W}}
+\newcommand{\fac}{\mathclose{\mathchar"0021}}
 
-\title[Wigner Phase-Space and Saddle Coalescence in Riemann's $\Xi$-Function]{Wigner Phase-Space Representation and Complex Saddle-Point Coalescence in the Transverse Wronskian of Riemann's $\Xi$-Function}
+\title[Wigner Phase-Space and Shifted Contours for Riemann's $\Xi$-Function]{Wigner Phase-Space Representation, Shifted Cauchy Contours, and Local Saddle-Point Coalescence in the Transverse Wronskian of Riemann's $\Xi$-Function}
 
 \author{Thijs Missiaen}
-\address{Independent Researcher, Belgium}
+\address{Independent Researcher, Belgium (ORCID: 0009-0007-3678-0810)}
 \email{thijs.missiaen@gmail.com}
-\urladdr{https://github.com/thijsmissiaen}
+\urladdr{https://orcid.org/0009-0007-3678-0810}
 
 \subjclass[2020]{Primary 11M06, 30E15; Secondary 81S30, 42B10, 65D30}
-\keywords{Riemann Xi-function, Jacobi theta kernel, transverse Wronskian, Wigner phase-space distribution, Hudson theorem, complex saddle-point coalescence, steepest descent}
+\keywords{Riemann Xi-function, Jacobi theta kernel, transverse Wronskian, Wigner phase-space distribution, Hudson theorem, Cauchy contour conditioning, local saddle-point coalescence}
 
-\date{October 2026}
+\date{November 2026}
 
 \begin{document}
 
 \begin{abstract}
-We prove that the inner correlation integral $I(y,t)$ governing the transverse Wronskian $W(d,t) = \frac{1}{2}\partial_d|\Xi(t-\ii d)|^2$ of Riemann's completed $\Xi$-function is proportional to the quantum-mechanical Wigner phase-space distribution $\Wig_\Phi(y,2t)$ of the Jacobi--Riemann kernel $\Phi(u)$, and that its $99.77\%$ real-axis Fourier cancellation at $t=\gamma_1$ is eliminated by shifting the integration contour into the holomorphic strip $|\Ima(x)| < \pi/4$. Our proof combines the holomorphic Jacobi differential identity for $\Phi(-u)=\Phi(u)$, double-exponential decay estimates on the vertical Cauchy walls $\xi = \pm L$, Hermitian reflection symmetry $G_y(-\xi+\ii\eta) = \overline{G_y(\xi+\ii\eta)}$ along horizontal contours, and a pitchfork saddle-point coalescence on the imaginary axis $\xi_* = 0$ for all $|y| \ge y_c(t)$. We further establish that Hudson's theorem and the zero-marginal identity $\int_{\mathbb{R}} I(y,\gamma_k)\,\dd y = 2|\Xi(\gamma_k)|^2 = 0$ force $I(y,\gamma_k)$ to change sign in $y$, while the monotone hyperbolic moment weight $y\sinh(d y)$ amplifies the positive coalesced tail.
+We study the phase-space and complex-contour structure of the transverse Wronskian $W(d,t) = \frac{1}{2}\partial_d|\Xi(t-\ii d)|^2$ of Riemann's completed zeta function $\Xi(t-\ii d) = \xi(\frac{1}{2}+d+\ii t)$. First, we express $W(d,t) = 16\int_0^\infty y\sinh(2d y)\,I(y,t)\,\dd y$ in terms of the canonical Wigner distribution $I(y,t) = 2\pi\Wig_\Phi(y/2, 2t)$ of the Jacobi--Riemann kernel $\Phi(u)$ and show via Hudson's theorem and the zero-marginal identity $\int_0^\infty I(y,\gamma_k)\,\dd y = 0$ that $I(y,t)$ changes sign. Second, we prove holomorphic parity $\Phi(-u)=\Phi(u)$ on $|\Ima(u)| < \pi/8$ and double-exponential vertical-wall decay on $|\Ima(z)| < \pi/4$, showing that horizontal contour shifts preserve $I(y,t)$ by Cauchy's theorem while improving $L^1$ quadrature conditioning. Third, we derive the local pitchfork normal form for stationary points of $\ln G_y(z) + 2\ii t z$ away from zeros of $\Phi(u)$, locate explicit zeros of $\Phi(u)$ inside $|\Ima(u)| < \pi/8$, and document why this formalism applies equally to functions with off-critical zeros.
 \end{abstract}
 
 \maketitle
 
 \section{Introduction}\label{sec:intro}
 
-Let $\xi(s) = \frac{1}{2}s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$ denote Riemann's completed zeta function, and set $s = \frac{1}{2} + d + \ii t$ with transverse offset $d = \sigma - \frac{1}{2} \in \mathbb{R}$ and spectral height $t \in \mathbb{R}$. Writing $z = -\ii(s - \frac{1}{2}) = t - \ii d$, Riemann's entire function $\Xi(z) := \xi(\frac{1}{2} + \ii z) = R(d,t) + \ii I_{\mathrm{im}}(d,t)$ admits the Fourier--Laplace integral representation \cite{Riemann1859,Polya1926,Titchmarsh1986}
+Let $\xi(s) = \frac{1}{2}s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$ denote Riemann's completed zeta function, and set $s = \frac{1}{2} + d + \ii t$ with transverse offset $d = \sigma - \frac{1}{2} \in \mathbb{R}$ and spectral height $t \in \mathbb{R}$. Writing $z = -\ii(s - \frac{1}{2}) = t - \ii d$, Riemann's entire function $\Xi(z) := \xi(\frac{1}{2} + \ii z) = R(d,t) + \ii I_{\mathrm{im}}(d,t)$ admits the classical Fourier--Laplace representation \cite{Riemann1859,Polya1926,Titchmarsh1986}
 \begin{equation}\label{eq:Xi_integral}
-\Xi(t - \ii d) = 2\int_0^\infty \Phi(u)\cosh(d u)\cos(t u)\,\dd u = \int_{-\infty}^\infty \Phi(u)\,\ee^{d u - \ii t u}\,\dd u,
+\Xi(t - \ii d) = 8\int_0^\infty \Phi(u)\cos\bigl(2(t - \ii d)u\bigr)\,\dd u = 4\int_{-\infty}^\infty \Phi(u)\,\ee^{2(d + \ii t)u}\,\dd u,
 \end{equation}
-where the rapidly decaying kernel $\Phi(u)$ is generated by the classic Jacobi theta series $\theta(x) = \sum_{n=-\infty}^\infty \ee^{-\pi n^2 x}$ through
+where the rapidly decaying kernel $\Phi(u)$ is generated by the Jacobi theta series $\theta(w) = \sum_{n\in\mathbb{Z}} \ee^{-\pi n^2 w}$ ($\Rea w > 0$) via
 \begin{equation}\label{eq:Phi_def}
 \Phi(u) := \sum_{n=1}^\infty \phi_n(u), \qquad \phi_n(u) := \left(2\pi^2 n^4 \ee^{9u} - 3\pi n^2 \ee^{5u}\right)\exp\!\left(-\pi n^2 \ee^{4u}\right).
 \end{equation}
-By the positivity criteria of Speiser \cite{Speiser1934}, Hinkkanen \cite{Hinkkanen1997}, and Lagarias \cite{Lagarias1999}, the absence of off-critical zeros of $\Xi(t-\ii d)$ in $d > 0$ is intimately linked to the sign of the real part of the logarithmic derivative $\Rea(\xi'(s)/\xi(s)) = W(d,t)/|\Xi(t-\ii d)|^2$, where the \emph{transverse Wronskian} is defined by
+By the function-theoretic positivity criteria of Hinkkanen \cite{Hinkkanen1997} and Lagarias \cite{Lagarias1999} (building on Speiser's geometric criterion for $\zeta'(s)$ \cite{Speiser1934}), the Riemann Hypothesis is equivalent to the non-negativity of $\Rea(\xi'(s)/\xi(s)) = W(d,t)/|\Xi(t-\ii d)|^2$ throughout $d > 0$, where the \emph{transverse Wronskian} is defined by
 \begin{equation}\label{eq:W_def}
 W(d,t) := \frac{1}{2}\frac{\partial}{\partial d}\big|\Xi(t-\ii d)\big|^2 = R\,\partial_d R + I_{\mathrm{im}}\,\partial_d I_{\mathrm{im}} = R\,\partial_t I_{\mathrm{im}} - I_{\mathrm{im}}\,\partial_t R.
 \end{equation}
-When \eqref{eq:W_def} is expanded directly as a double integral over $(u,v) \in \mathbb{R}^2$ along the real axis, numerical and analytical evaluation is obstructed by severe oscillatory cancellation: at the first non-trivial zero $t = \gamma_1 \approx 14.13472514$, positive and negative cosine lobes cancel to $99.7697\%$. The purpose of this article is to resolve this cancellation problem analytically by establishing the exact phase-space and complex-contour structure of $W(d,t)$.
 
-\begin{theorem}[Wigner Phase-Space Identity and Pitchfork Saddle Coalescence]\label{thm:main}
-Let $d > 0$ and $t > 0$, and define the mirror coordinates $x = u + v$ and $y = u - v$ with mirror convolution kernel $G_y(x) := \Phi\!\left(\frac{x+y}{2}\right)\Phi\!\left(\frac{x-y}{2}\right)$. Then the following properties hold:
+When \eqref{eq:W_def} is expanded directly as an oscillatory integral along the real axis, numerical quadrature faces severe cancellation: at $t = \gamma_1 \approx 14.13472514$ and shift $y = 0.40$, positive and negative cosine lobes cancel to $99.7697\%$. At the same time, it is essential not to conflate quadrature conditioning with a proof of positivity: by Cauchy's integral theorem, shifting a horizontal contour leaves the holomorphic integral mathematically unchanged, and the exact autocorrelation identity \eqref{eq:W_mirror_thm} holds for any real-even kernel $\Phi$, including kernels whose Fourier transforms possess off-axis zeros (such as Davenport--Heilbronn linear combinations \cite{DavenportHeilbronn1936,Titchmarsh1986} or backward de Bruijn--Newman deformations $H_\lambda$ with $\lambda < 0$ \cite{DeBruijn1950,Newman1976,CsordasNorfolkVarga1986}).
+
+This note separates three layers with explicit hypotheses: (i) unconditional exact identities for the Wigner autocorrelation representation and shifted Cauchy contours in $|\Ima(z)| < \pi/4$; (ii) a conditional local normal form for complex stationary-point coalescence on open subsets free of zeros of $\Phi$, illustrated numerically at $\omega = 2\gamma_1$; and (iii) explicit analytic obstructions inside the strip (zeros of $\Phi(u)$ creating logarithmic branch points in $\ln G_y(z)$, multi-crossing sign oscillations of $I(y,\gamma_k)$ for $k \ge 3$, and non-multiplicative counterexamples).
+
+\begin{theorem}[Canonical Wigner Identity, Shifted Cauchy Contours, and Local Saddle Normal Form]\label{thm:main}
+Let $d \in \mathbb{R}$ and $t \in \mathbb{R}$, and define mirror coordinates $x = u + v$, $y = u - v$ with mirror autocorrelation kernel $G_y(x) := \Phi\!\left(\frac{x+y}{2}\right)\Phi\!\left(\frac{x-y}{2}\right)$. Then:
 \begin{enumerate}
-\item[\textup{(i)}] \textbf{Wigner--Hudson phase-space representation and zero-marginal law:} The transverse Wronskian and its parity-reduced counterpart $\Wtil(d,t) := W(d,t)/d$ admit the exact representations
-\begin{equation}\label{eq:W_mirror_thm}
-W(d,t) = \frac{1}{2}\int_0^\infty y\sinh(d y)\,I(y,t)\,\dd y, \qquad \Wtil(d,t) = \frac{1}{2}\int_0^\infty y^2\,\frac{\sinh(d y)}{d y}\,I(y,t)\,\dd y,
-\end{equation}
-where the inner correlation integral $I(y,t) := \int_{-\infty}^\infty G_y(x)\cos(t x)\,\dd x$ is proportional to the quantum-mechanical Wigner distribution of $\Phi$:
+\item[\textup{(i)}] \textbf{Canonical Wigner representation and zero-marginal law:} Let $\Wig_\psi(q,p) := (2\pi)^{-1}\int_{\mathbb{R}} \psi(q+x/2)\overline{\psi(q-x/2)}\,\ee^{-\ii p x}\,\dd x$ denote the standard quantum-mechanical Wigner distribution \cite{Wigner1932,Hudson1974}. Defining the inner correlation integral
 \begin{equation}\label{eq:Wigner_thm}
-I(y,t) = 2\pi\,\Wig_\Phi(y, 2t), \qquad \Wig_\Phi(y,\omega) := \frac{1}{2\pi}\int_{-\infty}^\infty \Phi\!\left(\frac{y+x}{2}\right)\Phi\!\left(\frac{y-x}{2}\right)\ee^{\ii (\omega/2) x}\,\dd x.
+I(y,t) := \int_{-\infty}^\infty G_y(x)\cos(2t x)\,\dd x = 2\pi\,\Wig_\Phi\!\left(\frac{y}{2},\, 2t\right),
 \end{equation}
-At every real zero $\gamma_k$ of $\Xi$, the marginal integral vanishes identically, $\int_{-\infty}^\infty I(y,\gamma_k)\,\dd y = 2|\Xi(\gamma_k)|^2 = 0$, and since $\Phi$ is non-Gaussian, Hudson's theorem guarantees that $I(y,t)$ changes sign in the $(y,t)$-plane.
-\item[\textup{(ii)}] \textbf{Holomorphic strip, vertical wall decay, and Hermitian contour symmetry:} For each fixed $y \in \mathbb{R}$, the function $z \mapsto G_y(z)$ extends holomorphically (without non-holomorphic absolute values) to the open strip $\mathcal{S}_{\pi/4} := \{z = \xi + \ii\eta \in \mathbb{C} : |\eta| < \pi/4\}$ and satisfies the even parity $G_y(-z) = G_y(z)$. On any vertical segment $\xi = \pm L$ with $|\eta| < \pi/4$, $G_y(\pm L + \ii\eta)$ decays double-exponentially as $\mathcal{O}(\ee^{9L}\exp(-2\pi\cosh(2y)\ee^{2L}\cos(2\eta)))$, whereas $|\eta| = \pi/4$ forms a natural boundary where $\cos(2\eta) = 0$. Consequently, for every $\eta \in (0, \pi/4)$ and $\omega > 0$,
+one has $|\Xi(t-\ii d)|^2 = 16\int_0^\infty \cosh(2d y)\,I(y,t)\,\dd y$, $\int_0^\infty I(y,t)\,\dd y = \frac{1}{16}|\Xi(t)|^2$, and
+\begin{equation}\label{eq:W_mirror_thm}
+W(d,t) = 16\int_0^\infty y\sinh(2d y)\,I(y,t)\,\dd y, \qquad \Wtil(d,t) := \frac{W(d,t)}{d} = 32\int_0^\infty y^2\,\frac{\sinh(2d y)}{2d y}\,I(y,t)\,\dd y.
+\end{equation}
+At every real zero $\gamma_k$ of $\Xi$, $\int_0^\infty I(y,\gamma_k)\,\dd y = 0$, and since $\Phi$ is non-Gaussian, Hudson's theorem \cite{Hudson1974} implies that $I(y,t)$ changes sign in $(y,t) \in \mathbb{R}^2$.
+\item[\textup{(ii)}] \textbf{Holomorphic strip, Cauchy contour invariance, and strip zeros of $\Phi$:} The defining series \eqref{eq:Phi_def} converges locally uniformly on $|\Ima(u)| < \pi/8$, where $\Phi(-u) = \Phi(u)$ holds holomorphically, and ceases to converge on $|\Ima(u)| = \pi/8$. Hence for each $y \in \mathbb{R}$, $z \mapsto G_y(z)$ is holomorphic and even on $\mathcal{S}_{\pi/4} := \{z = \xi + \ii\eta \in \mathbb{C} : |\eta| < \pi/4\}$, decays double-exponentially as $|G_y(\pm L + \ii\eta)| \le 16\pi^4\ee^{9L}\exp(-2\pi\cosh(2y)\ee^{2L}\cos(2\eta))$ as $L \to \infty$, and satisfies $G_y(-\xi+\ii\eta) = \overline{G_y(\xi+\ii\eta)}$ with $G_y(\ii\eta) = |\Phi((y+\ii\eta)/2)|^2 \ge 0$. For every $\eta \in (0,\pi/4)$ and $t > 0$, Cauchy's theorem gives the contour-invariant identity
 \begin{equation}\label{eq:shifted_I_thm}
-I(y,\omega) = \ee^{-\omega\eta}\int_{-\infty}^\infty \Rea\!\Big[G_y(\xi+\ii\eta)\,\ee^{\ii\omega\xi}\Big]\dd\xi,
+I(y,t) = \ee^{-2t\eta}\int_{-\infty}^\infty \Rea\!\Big[G_y(\xi+\ii\eta)\,\ee^{2\ii t\xi}\Big]\dd\xi.
 \end{equation}
-and $G_y$ obeys the exact Hermitian symmetry $G_y(-\xi+\ii\eta) = \overline{G_y(\xi+\ii\eta)}$, taking real non-negative values on the imaginary axis: $G_y(\ii\eta) = |\Phi((y+\ii\eta)/2)|^2 > 0$ whenever $\Phi((y+\ii\eta)/2) \neq 0$.
-\item[\textup{(iii)}] \textbf{Pitchfork saddle-point coalescence:} For each fixed frequency $\omega > 0$, the complex saddle points $x_* \in \mathcal{S}_{\pi/4}$ solving $\partial_x \ln G_y(x) + \ii\omega = 0$ undergo a pitchfork bifurcation at a critical mirror shift $y_c(\omega) > 0$ determined by the simultaneous system
+However, $\Phi(u)$ is \emph{not} zero-free on $|\Ima(u)| < \pi/8$: in particular, $\Phi(\ii\tau_0) = 0$ at $\tau_0 \approx 0.3194150268 < \pi/8$ and $\Phi(u_1) = 0$ at $u_1 \approx 0.1278237567 + 0.3477699161\ii$, producing logarithmic branch points of $\ln G_y(z)$ inside $\mathcal{S}_{\pi/4}$.
+\item[\textup{(iii)}] \textbf{Conditional local pitchfork coalescence normal form:} Let $\omega = 2t > 0$, and suppose $(y_c, \eta_c) \in (0,\infty) \times (0,\pi/4)$ satisfies $G_{y_c}(\ii\eta_c) > 0$ together with
 \[
-\Ima\!\big[\partial_x \ln G_y(\ii\eta_c)\big] + \omega = 0, \qquad \partial_\xi^2 \ln G_y(\ii\eta_c) = 0.
+L_{y_c}'(\eta_c) = \omega, \qquad L_{y_c}''(\eta_c) = 0, \qquad \partial_y L_{y_c}'(\eta_c) \neq 0, \qquad L_{y_c}'''(\eta_c) \neq 0,
 \]
-For $0 \le |y| < y_c(\omega)$, the dominant saddle splits into a conjugate-reflected off-axis pair $x_*^\pm(y,\omega) = \pm\xi_*(y,\omega) + \ii\eta_*(y,\omega)$ with $\xi_* > 0$ and $0 < \eta_* < \pi/4$. For all $|y| \ge y_c(\omega)$, the pair coalesces onto the imaginary axis at $x_*(y,\omega) = \ii\eta_*(y,\omega)$ ($\xi_* \equiv 0$) with strictly negative horizontal Hessian $\partial_\xi^2 \ln G_y(\ii\eta_*) < 0$, eliminating oscillatory cancellation along the horizontal steepest-descent contour.
+where $L_y(\eta) := \ln G_y(\ii\eta)$. Under the sign conditions $\partial_y L_{y_c}'(\eta_c) > 0$ and $L_{y_c}'''(\eta_c) < 0$, the stationary-point equation $\partial_z\ln G_y(z) + \ii\omega = 0$ undergoes a local supercritical pitchfork bifurcation in a neighborhood of $(y_c, \ii\eta_c)$: two symmetric off-axis roots $z_*^\pm(y,\omega) = \pm\xi_*(y,\omega) + \ii\eta_*(y,\omega)$ for $y < y_c$ ($y$ near $y_c$) merge onto a single local imaginary-axis root $z_*(y,\omega) = \ii\eta_*(y,\omega)$ with $\partial_\xi^2\ln G_y(\ii\eta_*) < 0$ for $y > y_c$ ($y$ near $y_c$).
 \end{enumerate}
 \end{theorem}
 
-To fix the quantitative scale of Theorem~\ref{thm:main}, we collect the canonical threshold constants and first-zero benchmark values (verified to 50--60 decimal places in Section~\ref{sec:numerics}) in a single display:
+The numerical constants verified at $50$--$60$ decimal places in Section~\ref{sec:numerics} at the first Riemann zero $\gamma_1 \approx 14.1347251417$ ($\omega_1 = 2\gamma_1 \approx 28.2694502835$) are:
 \begin{equation}\label{eq:canonical_constants}
 \begin{aligned}
 \eta_{\max} &= \frac{\pi}{4} \approx 0.7853981634, &
-\gamma_1 &\approx 14.1347251417, \;\; \omega_1 = 2\gamma_1 \approx 28.2694502835, \\
+\tau_0 &\approx 0.3194150268 \;\; (2\tau_0 \approx 0.6388300536), \\
 y_c(\omega_1) &\approx 0.4320205303, &
-\eta_*(y_c,\omega_1) &\approx 0.6027150239, \\
-y_c^{\mathrm{inner}}(\omega_1) &= \frac{1}{2}\ln\!\left(\frac{\omega_1}{4\pi}\right) \approx 0.40537874, &
-\rho_{\mathrm{real}}(\omega_1) &= \frac{I_+}{|I_-|}\Big|_{\eta=0} \approx 1.002308, \\
-\rho_{\mathrm{lift}}(\omega_1) &= \frac{I_+}{|I_-|}\Big|_{\eta=0.50} \approx 2547.9547, &
-\rho_{\mathrm{coal}}(\gamma_1) &= \frac{I_+}{|I_-|}\Big|_{\eta=0.18} \approx 1.547 \times 10^{11}.
+\eta_c(\omega_1) &\approx 0.6027150239, \\
+\kappa_{\mathrm{quad}}(\eta=0) &\approx 867.6007 \;\; (y=0.40), &
+\kappa_{\mathrm{quad}}(\eta=0.50) &\approx 1.0008 \;\; (y=0.40).
 \end{aligned}
 \end{equation}
 
-Table~\ref{tab:literature} summarizes the distinction between the classical foundations in analytic number theory and quantum harmonic analysis and the specific structural results proven in the present work.
+Table~\ref{tab:literature} separates classical results in the literature from the identities, local analysis, and obstructions recorded in this note.
 
 \begin{table}[htbp]
 \centering
-\caption{Separation between classical foundations in the literature and the novel analytical results established in this work.}\label{tab:literature}
+\caption{Relationship between classical results and the analysis in this note.}\label{tab:literature}
 \footnotesize
-\begin{tabular}{p{0.28\textwidth} p{0.32\textwidth} p{0.33\textwidth}}
+\begin{tabular}{p{0.27\textwidth} p{0.33\textwidth} p{0.33\textwidth}}
 \toprule
-\textbf{Classical Author(s)} & \textbf{Established Classical Result} & \textbf{Novel Contribution in This Work} \\
+\textbf{Author(s)} & \textbf{Established Classical Result} & \textbf{Content of Present Note} \\
 \midrule
-Riemann (1859) \cite{Riemann1859}, P\'olya (1926) \cite{Polya1926} & Representation of $\Xi(z)$ via the Jacobi-theta kernel $\Phi(u)$ and Fourier convolution integrals. & Transformation of $\partial_d|\Xi|^2$ into $(x,y)$ mirror coordinates and identification of $I(y,t) = 2\pi\Wig_\Phi(y,2t)$. \\
+Riemann (1859) \cite{Riemann1859}, P\'olya (1926) \cite{Polya1926} & Representation of $\Xi(z)$ via the Jacobi-theta kernel $\Phi(u)$. & Mirror-coordinate formula $W(d,t) = 16\int_0^\infty y\sinh(2d y)I(y,t)\,\dd y$ with $I(y,t) = 2\pi\Wig_\Phi(y/2,2t)$. \\
 \addlinespace[3pt]
-Speiser (1934) \cite{Speiser1934}, Hinkkanen (1997) \cite{Hinkkanen1997}, Lagarias (1999) \cite{Lagarias1999} & Equivalence between zero-free regions in $d>0$ and positivity of $\Rea(\xi'(s)/\xi(s)) = W(d,t)/|\Xi|^2$. & Parity-reduced hyperbolic-sinc representation $\Wtil(d,t) = W(d,t)/d$ and removal of the $d\to 0$ degeneracy. \\
+Speiser (1934) \cite{Speiser1934}, Hinkkanen (1997) \cite{Hinkkanen1997}, Lagarias (1999) \cite{Lagarias1999} & Equivalence of RH with $\zeta'(s) \neq 0$ in $0<\sigma<1/2$ and $\Rea(\xi'(s)/\xi(s)) > 0$ in $\sigma > 1/2$. & Parity-reduced hyperbolic-sinc representation $\Wtil(d,t) = W(d,t)/d$ and documentation of DH counterexamples. \\
 \addlinespace[3pt]
-Hudson (1974) \cite{Hudson1974}, Wigner (1932) \cite{Wigner1932} & A Wigner distribution $\Wig_\psi(q,p)$ on $\mathbb{R}^2$ is everywhere non-negative if and only if $\psi$ is Gaussian. & Proof that non-Gaussianity of $\Phi(u)$ and $\int_{\mathbb{R}} I(y,\gamma_k)\,\dd y = 0$ force sign changes of $I(y,t)$ in the $(y,t)$-plane. \\
+Wigner (1932) \cite{Wigner1932}, Hudson (1974) \cite{Hudson1974} & $\Wig_\psi(q,p) \ge 0$ everywhere on $\mathbb{R}^2$ if and only if $\psi$ is Gaussian. & Zero-marginal identity $\int_0^\infty I(y,\gamma_k)\,\dd y = 0$ and multi-crossing behavior for $k \ge 3$. \\
 \addlinespace[3pt]
-Karlin (1968) \cite{Karlin1968}, Csordas--Norfolk--Varga (1986) \cite{Csordas1986} & Total positivity of kernels and Tur\'an inequalities for Jensen polynomials of $\Xi$. & Monotone hyperbolic moment lever $y\sinh(d y) - y_0\sinh(d y_0)$ matching the single sign-change point $y_0(\gamma_k)$ of $I(y,\gamma_k)$. \\
+Chester--Friedman--Ursell (1957) \cite{ChesterFriedmanUrsell1957}, Olver (1974) \cite{Olver1974} & Local cubic normal form for two coalescing complex saddle points. & Local pitchfork normal form for $G_y(z)\ee^{\ii\omega z}$ away from $\Phi$-zeros, plus explicit location of strip $\Phi$-zeros. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Proof overview}\label{subsec:proof_overview}
+\subsection{Proof overview}\label{subsec:overview}
 
-The proof of Theorem~\ref{thm:main} is organized into three quantitative and structural ingredients:
+The argument proceeds in four steps:
 \begin{enumerate}
-\item \emph{First structural ingredient (Mirror factorization and Wigner zero-marginal identity, Section~\ref{sec:wigner}):} Using the holomorphic evenness $\Phi(-v) = \Phi(v)$ and the linear change of variables $(x=u+v, y=u-v)$ with Jacobian $\frac{1}{2}$, we factor the double integral for $|\Xi(t-\ii d)|^2$ into the longitudinal Fourier transform $I(y,t) = 2\pi\Wig_\Phi(y,2t)$ and the transverse hyperbolic weight $\cosh(d y)$:
-\begin{equation}\label{eq:ingred1}
-\big|\Xi(t-\ii d)\big|^2 = \frac{1}{2}\int_{-\infty}^\infty \cosh(d y)\,I(y,t)\,\dd y \implies \int_{-\infty}^\infty I(y,\gamma_k)\,\dd y = 2\big|\Xi(\gamma_k)\big|^2 = 0.
-\end{equation}
-\item \emph{Second quantitative ingredient (Cauchy contour box and Hermitian reflection in $|\eta| < \pi/4$, Section~\ref{sec:cauchy}):} By replacing $\cos(\omega x)$ with $\Rea(\ee^{\ii\omega x})$ on the real axis prior to contour deformation and bounding the vertical segments $\xi = \pm L$ for $0 \le \tau \le \eta < \pi/4$, we prove the uniform side-wall decay estimate
-\begin{equation}\label{eq:ingred2}
-\big|G_y(\pm L + \ii\tau)\,\ee^{\ii\omega(\pm L + \ii\tau)}\big| \le C_0\,\ee^{9L - \omega\tau}\exp\!\Big(-2\pi\cosh(2y)\,\ee^{2L}\cos(2\eta)\Big) \xrightarrow{L\to\infty} 0,
-\end{equation}
-together with the exact Hermitian symmetry $G_y(-\xi+\ii\eta) = \overline{G_y(\xi+\ii\eta)}$.
-\item \emph{Third quantitative ingredient (Pitchfork bifurcation and Hessian negativity on the imaginary axis, Section~\ref{sec:saddle}):} Restricting $\ln G_y(\xi+\ii\eta)$ to the imaginary axis $\xi=0$ where $G_y(\ii\eta) = |\Phi(\frac{y+\ii\eta}{2})|^2 > 0$, the Cauchy--Riemann equations yield
-\begin{equation}\label{eq:ingred3}
-\partial_\xi \ln G_y(\ii\eta) = -\ii\,\partial_\eta \ln G_y(\ii\eta), \qquad \partial_\xi^2 \ln G_y(\ii\eta) = -\partial_\eta^2 \ln G_y(\ii\eta) = \frac{1}{2}\Rea\!\left[\frac{\dd^2}{\dd u^2}\ln\Phi\!\left(\frac{y+\ii\eta}{2}\right)\right].
-\end{equation}
-When $|y| \ge y_c(\omega)$, the stationary-phase equation $\partial_\eta \ln G_y(\ii\eta_*) = \omega$ admits a unique steepest-descent solution on the lower branch $\eta_*(y,\omega) \in (0,\eta_c]$ where $\partial_\xi^2 \ln G_y(\ii\eta_*) < 0$.
+\item \emph{Autocorrelation and Wigner scaling (Section~\ref{sec:wigner}):} Applying $x = u+v$, $y = u-v$ (Jacobian $\frac{1}{2}$) to $|\Xi(t-\ii d)|^2 = 16\iint_{\mathbb{R}^2}\Phi(u)\Phi(v)\ee^{2d(u-v)}\cos(2t(u+v))\,\dd u\,\dd v$ yields $|\Xi(t-\ii d)|^2 = 16\int_0^\infty \cosh(2d y)\,I(y,t)\,\dd y$ and $W(d,t) = 16\int_0^\infty y\sinh(2d y)\,I(y,t)\,\dd y$, where $G_y(x) = \Phi(\frac{y}{2}+\frac{x}{2})\Phi(\frac{y}{2}-\frac{x}{2})$ identifies $I(y,t) = 2\pi\Wig_\Phi(y/2, 2t)$.
+\item \emph{Holomorphic strip and Cauchy rectangle (Section~\ref{sec:holomorphic}):} The differential representation $\Phi(u) = \frac{1}{16}(f''(u) - f(u))$ for $f(u) = \ee^u\theta(\ee^{4u})$, combined with Jacobi's modular relation $\theta(\ee^{-4u}) = \ee^{2u}\theta(\ee^{4u})$, proves $\Phi(-u)=\Phi(u)$ holomorphically on $|\Ima(u)| < \pi/8$. Closing Cauchy's rectangle on $[-L,L]\times[0,\eta]$ ($\eta \in (0,\pi/4)$) yields \eqref{eq:shifted_I_thm}. We then prove $\Phi(\ii\tau)$ changes sign on $(0,\pi/8)$ and locate off-axis zeros of $\Phi(u)$ in the strip.
+\item \emph{Local saddle coalescence (Section~\ref{sec:coalescence}):} On open neighborhoods where $G_y(z) \neq 0$, Hermitian symmetry $G_y(-\xi+\ii\eta) = \overline{G_y(\xi+\ii\eta)}$ forces $\partial^k_\xi\ln G_y(\ii\eta)$ to be purely imaginary for odd $k$. Expanding $\partial_z\ln G_y(z) + \ii\omega = 0$ around $(y_c,\ii\eta_c)$ yields the local pitchfork law $(\Delta z)^2 = K^2(y_c - y) + \mathcal{O}(|y-y_c|^{3/2})$.
+\item \emph{Quadrature conditioning and obstructions (Sections~\ref{sec:numerics}--\ref{sec:scope}):} High-precision computations in \texttt{mpmath} verify \eqref{eq:W_mirror_thm} to $54$ decimals, quantify shifted-contour quadrature conditioning, and exhibit the multi-crossing and Davenport--Heilbronn obstructions.
 \end{enumerate}
-
-Combining ingredients (1), (2), and (3) yields Theorem~\ref{thm:main} directly: ingredient (1) establishes the Wigner representation \eqref{eq:W_mirror_thm}--\eqref{eq:Wigner_thm} and the zero-marginal constraint \eqref{eq:ingred1}; ingredient (2) justifies the contour shift \eqref{eq:shifted_I_thm} across the open strip $|\eta| < \pi/4$ and proves the natural boundary at $|\eta| = \pi/4$; and ingredient (3) establishes the pitchfork coalescence of $x_*^\pm(y,\omega)$ at $y_c(\omega)$ and the elimination of real-axis oscillatory cancellation.
 
 \subsection{Notation and conventions}\label{subsec:notation}
 
-Throughout this paper, $s = \sigma + \ii t = \frac{1}{2} + d + \ii t$ denotes a complex variable with $d = \sigma - \frac{1}{2} \in \mathbb{R}$ and $t \in \mathbb{R}$, and $z = t - \ii d$. The completed Riemann function $\Xi(z)$ is normalized by \eqref{eq:Xi_integral} so that $\Xi(0) = \xi(1/2) \approx 0.4971207782$. Note that if one works in the rescaled variable $u_{\mathrm{scaled}} = 2u$ (as in Section~\ref{sec:numerics} when comparing $\omega = 2t$ against $\omega = t$), replacing $\cos(t x)$ by $\cos(2t x)$ simply rescales the frequency parameter from $\omega = t$ to $\omega = 2t$; we state all saddle-point and contour formulas in terms of a general positive frequency parameter $\omega > 0$ so that both conventions are covered simultaneously without ambiguity. For complex $w \in \mathbb{C}$, $\overline{w}$ denotes complex conjugation, and $|w| = (w\overline{w})^{1/2}$ is reserved strictly for moduli; we never substitute $|u|$ into the argument of $\Phi(u)$. Vinogradov's notation $A \ll B$ and Landau's $A = \mathcal{O}(B)$ mean that $|A| \le C B$ for an absolute constant $C > 0$ independent of $L, \xi, y, d,$ and $t$, unless a subscript (such as $\ll_\eta$) explicitly indicates dependence on a parameter.
+Throughout this series, $s = \sigma + \ii t = \frac{1}{2} + d + \ii t$ with $d = \sigma - \frac{1}{2} \in \mathbb{R}$, $t \in \mathbb{R}$, and $z = -\ii(s-\frac{1}{2}) = t - \ii d$, so $\Xi(t-\ii d) = \xi(\frac{1}{2}+d+\ii t)$. When discussing contour integrals at a general Fourier frequency we write $\omega = 2t > 0$ and $I_{\mathrm{freq}}(y,\omega) := \int_{-\infty}^\infty G_y(x)\cos(\omega x)\,\dd x$, so that the canonical correlation kernel in \eqref{eq:Wigner_thm} satisfies $I(y,t) \equiv I_{\mathrm{freq}}(y,2t)$ everywhere. Complex contour coordinates in the $x$-plane are written $z = \xi + \ii\eta$ with $\xi \in \mathbb{R}$ and $|\eta| < \pi/4$. For any real-valued integrand $f(\xi)$ on $\mathbb{R}$ with non-zero integral, $\kappa_{\mathrm{quad}}[f] := (\int_{\mathbb{R}}|f(\xi)|\,\dd\xi)/\big|\int_{\mathbb{R}} f(\xi)\,\dd\xi\big| \ge 1$ denotes its $L^1$ quadrature condition number.
 
-\section{Mirror coordinates and the Wigner phase-space identity}\label{sec:wigner}
+\section{Canonical Wigner representation and zero-marginal law}\label{sec:wigner}
 
-We begin by deriving the exact mirror-coordinate factorization of $|\Xi(t-\ii d)|^2$ and $W(d,t)$, justifying all integral interchanges via Fubini's theorem, and connecting the inner kernel to quantum phase-space analysis.
+We begin by deriving the exact autocorrelation representation of $|\Xi(t-\ii d)|^2$ and $W(d,t)$ with particular care for prefactors and standard Wigner scaling.
 
-\begin{proposition}[Fubini justification and mirror factorization]\label{prop:mirror}
-For all $(d,t) \in \mathbb{R}^2$, the double integral representation of $|\Xi(t-\ii d)|^2$ converges absolutely and satisfies
-\begin{equation}\label{eq:Xi2_mirror}
-\big|\Xi(t-\ii d)\big|^2 = \frac{1}{2}\int_{-\infty}^\infty \cosh(d y)\,I(y,t)\,\dd y = \int_0^\infty \cosh(d y)\,I(y,t)\,\dd y,
+\begin{proposition}[Mirror autocorrelation and canonical Wigner scaling]\label{prop:mirror_wigner}
+For all $(d,t) \in \mathbb{R}^2$, $|\Xi(t-\ii d)|^2$, $W(d,t)$, and $\Wtil(d,t) := W(d,t)/d$ satisfy
+\begin{equation}\label{eq:mod_Xi_sq}
+\big|\Xi(t-\ii d)\big|^2 = 16\int_0^\infty \cosh(2d y)\,I(y,t)\,\dd y,
 \end{equation}
-where the inner correlation integral $I(y,t)$ is an even, smooth function of both $y$ and $t$ given by
-\begin{equation}\label{eq:boxed_wigner}
-\boxed{I(y,t) = \int_{-\infty}^\infty \Phi\!\left(\frac{x+y}{2}\right)\Phi\!\left(\frac{x-y}{2}\right)\cos(t x)\,\dd x = 2\pi\,\Wig_\Phi(y, 2t).}
-\end{equation}
+together with \eqref{eq:Wigner_thm} and \eqref{eq:W_mirror_thm}. In particular, at $d = 0$, $\int_0^\infty I(y,t)\,\dd y = \frac{1}{16}|\Xi(t)|^2$.
 \end{proposition}
 
 \begin{proof}
-For real $u \in \mathbb{R}$, the Jacobi-theta kernel $\Phi(u)$ is smooth, strictly positive, even ($\Phi(-u) = \Phi(u)$, proven holomorphically in Lemma~\ref{lem:parity} below), and satisfies the super-exponential decay bound $0 < \Phi(u) \le C_1 \ee^{9|u|}\exp(-\pi\ee^{4|u|})$. Consequently, for any fixed $d \in \mathbb{R}$ and $k \ge 0$, the function $u \mapsto |u|^k \Phi(u)\ee^{|d||u|}$ belongs to $L^1(\mathbb{R})$. Writing $\Xi(t-\ii d) = \int_{\mathbb{R}} \Phi(u)\ee^{d u - \ii t u}\,\dd u$ and $\overline{\Xi(t-\ii d)} = \int_{\mathbb{R}} \Phi(v)\ee^{d v + \ii t v}\,\dd v$, Tonelli's theorem ensures that the product $\Phi(u)\Phi(v)\ee^{d(u+v)}$ is integrable over $\mathbb{R}^2$. By Fubini's theorem,
-\[
-\big|\Xi(t-\ii d)\big|^2 = \iint_{\mathbb{R}^2} \Phi(u)\Phi(v)\,\ee^{d(u+v)}\cos\!\big(t(u-v)\big)\,\dd u\,\dd v.
-\]
-Performing the reflection $v \mapsto -v$ and invoking the even parity $\Phi(-v) = \Phi(v)$ yields
+Because $\Phi(u)$ is real and even on $\mathbb{R}$ and $\Phi(u) = \mathcal{O}(\ee^{9|u|}\exp(-\pi\ee^{4|u|}))$, multiplying $\Xi(t-\ii d) = 4\int_{\mathbb{R}}\Phi(u)\ee^{2(d+\ii t)u}\,\dd u$ by $\overline{\Xi(t-\ii d)} = 4\int_{\mathbb{R}}\Phi(v)\ee^{2(d-\ii t)v}\,\dd v$ and substituting $v \mapsto -v$ by Fubini's theorem gives
 \[
 \begin{aligned}
-\big|\Xi(t-\ii d)\big|^2 &= \iint_{\mathbb{R}^2} \Phi(u)\Phi(v)\,\ee^{d(u-v)}\cos\!\big(t(u+v)\big)\,\dd u\,\dd v \\
-&= \iint_{\mathbb{R}^2} \Phi(u)\Phi(v)\cosh\!\big(d(u-v)\big)\cos\!\big(t(u+v)\big)\,\dd u\,\dd v,
+\big|\Xi(t-\ii d)\big|^2 &= 16\iint_{\mathbb{R}^2} \Phi(u)\Phi(v)\,\ee^{2d(u-v)}\,\ee^{2\ii t(u+v)}\,\dd u\,\dd v \\
+&= 16\iint_{\mathbb{R}^2} \Phi(u)\Phi(v)\cosh\big(2d(u-v)\big)\cos\big(2t(u+v)\big)\,\dd u\,\dd v,
 \end{aligned}
 \]
-where the second equality follows by averaging the integrand with its image under $(u,v) \mapsto (v,u)$. Now introduce the linear mirror transformation $x = u + v$, $y = u - v$, with inverse $u = \frac{x+y}{2}$, $v = \frac{x-y}{2}$ and Jacobian determinant $|\frac{\partial(u,v)}{\partial(x,y)}| = \frac{1}{2}$. Since $\Phi(\frac{x+y}{2})\Phi(\frac{x-y}{2})\cosh(d y)$ is strictly positive and integrable on $\mathbb{R}^2$, Fubini's theorem permits separating the $x$- and $y$-integrals to obtain \eqref{eq:Xi2_mirror} and the first equality in \eqref{eq:boxed_wigner}. Finally, since $\Phi$ is even and real on $\mathbb{R}$, $G_y(-x) = G_y(x)$ implies $\int_{\mathbb{R}} G_y(x)\sin(t x)\,\dd x = 0$, so replacing $\cos(t x)$ by $\ee^{\ii t x}$ and comparing with the definition of $\Wig_\Phi(y,2t)$ in \eqref{eq:Wigner_thm} completes the proof.
+where the last step symmetrizes over $(u,v) \leftrightarrow (v,u)$. Changing variables to $x = u + v$ and $y = u - v$ gives $u = \frac{x+y}{2}$, $v = \frac{x-y}{2}$, and $\dd u\,\dd v = \frac{1}{2}\dd x\,\dd y$, whence
+\[
+\begin{aligned}
+\big|\Xi(t-\ii d)\big|^2 &= 8\int_{-\infty}^\infty \cosh(2d y)\left(\int_{-\infty}^\infty \Phi\!\left(\frac{x+y}{2}\right)\Phi\!\left(\frac{x-y}{2}\right)\cos(2t x)\,\dd x\right)\dd y \\
+&= 16\int_0^\infty \cosh(2d y)\,I(y,t)\,\dd y,
+\end{aligned}
+\]
+since $I(-y,t) = I(y,t)$. Because $|y\sinh(2d y)I(y,t)| \le |y|\sinh(2|d||y|)I(y,0)$ is integrable on $[0,\infty)$ uniformly on compact $d$-intervals, differentiating \eqref{eq:mod_Xi_sq} under the integral sign gives $\partial_d|\Xi(t-\ii d)|^2 = 32\int_0^\infty y\sinh(2d y)\,I(y,t)\,\dd y$, and dividing by $2$ yields $W(d,t) = 16\int_0^\infty y\sinh(2d y)\,I(y,t)\,\dd y$ and $\Wtil(d,t) = 16\int_0^\infty y\frac{\sinh(2d y)}{d}\,I(y,t)\,\dd y = 32\int_0^\infty y^2\frac{\sinh(2d y)}{2d y}\,I(y,t)\,\dd y$. Finally, since $\Phi$ is real and even, the standard Wigner distribution $\Wig_\Phi(q,p) = \frac{1}{2\pi}\int_{\mathbb{R}}\Phi(q+\frac{x}{2})\Phi(q-\frac{x}{2})\cos(p x)\,\dd x$ evaluated at $(q,p) = (y/2, 2t)$ equals $\frac{1}{2\pi}I(y,t)$, proving \eqref{eq:Wigner_thm}.
 \end{proof}
 
-\begin{corollary}[Differentiation under the integral sign and parity reduction]\label{cor:W_tilde}
-For all $(d,t) \in \mathbb{R}^2$, the transverse Wronskian $W(d,t) = \frac{1}{2}\partial_d|\Xi(t-\ii d)|^2$ is an odd analytic function of $d$, i.e., $W(-d,t) = -W(d,t)$, so all of its even transverse derivatives vanish identically on the critical line: $\partial_d^{2m} W(0,t) \equiv 0$ for all $m \ge 0$. Dividing by $d$ yields the smooth, even parity-reduced Wronskian
-\begin{equation}\label{eq:W_tilde_integral}
-\Wtil(d,t) := \frac{W(d,t)}{d} = \frac{1}{2}\int_0^\infty y^2\,\frac{\sinh(d y)}{d y}\,I(y,t)\,\dd y, \qquad \Wtil(0,t) = \big(\Xi'(t)\big)^2 - \Xi(t)\Xi''(t).
-\end{equation}
-\end{corollary}
-
-\begin{proof}
-For any compact interval $|d| \le D$, the differentiated integrand $|y\sinh(d y) I(y,t)| \le |y|\sinh(D|y|) I(y,0)$ is dominated by an $L^1(\mathbb{R})$ function because $I(y,0) \ll \ee^{9|y|}\exp(-2\pi\ee^{2|y|})$. Lebesgue's dominated convergence theorem therefore justifies differentiating \eqref{eq:Xi2_mirror} under the integral sign with respect to $d$ arbitrarily many times, giving \eqref{eq:W_mirror_thm} and \eqref{eq:W_tilde_integral}. Evaluating at $d=0$ via $\lim_{d\to 0} \frac{\sinh(d y)}{d y} = 1$ and using $\partial_d^2|\Xi(t-\ii d)|^2\big|_{d=0} = 2[(\Xi'(t))^2 - \Xi(t)\Xi''(t)]$ yields the boundary identity in \eqref{eq:W_tilde_integral}.
-\end{proof}
-
-\begin{proposition}[Hudson zero-marginal theorem and Karlin hyperbolic moment lever]\label{prop:hudson_karlin}
-Let $\gamma_k \in \mathbb{R}$ be any real zero of $\Xi(\gamma_k) = 0$. Then:
+\begin{proposition}[Hudson sign indefiniteness and single-crossing moment identity]\label{prop:hudson_karlin}
+The correlation kernel $I(y,t)$ satisfies:
 \begin{enumerate}
-\item[\textup{(a)}] The marginal integral of $I(y,\gamma_k)$ vanishes identically:
-\begin{equation}\label{eq:zero_marginal}
-\int_{-\infty}^\infty I(y,\gamma_k)\,\dd y = 2\int_0^\infty I(y,\gamma_k)\,\dd y = 2\big|\Xi(\gamma_k)\big|^2 = 0.
+\item[\textup{(a)}] \textbf{Zero-marginal identity and sign changes:} At every real zero $\gamma_k$ of $\Xi$, the marginal integral vanishes: $\int_0^\infty I(y,\gamma_k)\,\dd y = \frac{1}{16}|\Xi(\gamma_k)|^2 = 0$. Since $\Phi \in L^2(\mathbb{R})$ decays double-exponentially as $|u|\to\infty$, $\Phi$ is not Gaussian, so by Hudson's theorem \cite{Hudson1974} $\Wig_\Phi$ (and hence $I(y,t)$) assumes strictly negative values on $\mathbb{R}^2$; in particular, $I(\cdot,\gamma_k)$ cannot have constant sign on $(0,\infty)$ unless it vanishes identically, which is ruled out by Fourier uniqueness since $G_y(0) = \Phi(y/2)^2 \not\equiv 0$.
+\item[\textup{(b)}] \textbf{Subtracted moment identity:} For every $y_0 \ge 0$, $d > 0$, and $t \in \mathbb{R}$,
+\begin{equation}\label{eq:karlin_subtraction}
+W(d,t) = y_0\sinh(2d y_0)\,\big|\Xi(t)\big|^2 + 16\int_0^\infty \big(y\sinh(2d y) - y_0\sinh(2d y_0)\big)\,I(y,t)\,\dd y.
 \end{equation}
-Since $I(0,\gamma_k) = \int_{\mathbb{R}} \Phi(x/2)^2\cos(\gamma_k x)\,\dd x \neq 0$ and $I(\cdot,\gamma_k)$ is continuous, $I(y,\gamma_k)$ must assume both negative and positive values on $y \in (0,\infty)$, in accordance with Hudson's theorem \cite{Hudson1974} for the non-Gaussian wavepacket $\Phi$.
-\item[\textup{(b)}] For any reference point $y_0 > 0$ and any $d > 0$, the transverse Wronskian satisfies the exact lever identity
-\begin{equation}\label{eq:karlin_lever}
-W(d,t) = \frac{1}{2}y_0\sinh(d y_0)\big|\Xi(t)\big|^2 + \frac{1}{2}\int_0^\infty \Big(y\sinh(d y) - y_0\sinh(d y_0)\Big)I(y,t)\,\dd y.
-\end{equation}
-In particular, whenever $I(y,t)$ has a single sign change on $(0,\infty)$ from $I(y,t) \le 0$ on $(0,y_0)$ to $I(y,t) \ge 0$ on $(y_0,\infty)$ (not identically zero), the strict monotonicity of $y \mapsto y\sinh(d y)$ on $(0,\infty)$ implies that $(y\sinh(d y) - y_0\sinh(d y_0))I(y,t) \ge 0$ for all $y \ge 0$, whence $W(d,t) > 0$ for all $d > 0$.
+If, at a given $t$, $I(y,t)$ happens to have a \emph{single} sign change from $\le 0$ on $[0,y_0)$ to $\ge 0$ on $(y_0,\infty)$ (not identically zero), then \eqref{eq:karlin_subtraction} immediately implies $W(d,t) > 0$ for all $d > 0$ \cite{Karlin1968}.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-Setting $d = 0$ in \eqref{eq:Xi2_mirror} gives $\int_0^\infty I(y,t)\,\dd y = |\Xi(t)|^2$, which vanishes at $t = \gamma_k$, proving \eqref{eq:zero_marginal}. Multiplying $\int_0^\infty I(y,t)\,\dd y = |\Xi(t)|^2$ by $\frac{1}{2}y_0\sinh(d y_0)$ and subtracting from \eqref{eq:W_mirror_thm} produces \eqref{eq:karlin_lever}. Since $w_d(y) := y\sinh(d y)$ has derivative $w_d'(y) = \sinh(d y) + d y\cosh(d y) > 0$ for all $d > 0$ and $y > 0$, $w_d(y) - w_d(y_0)$ is negative on $[0,y_0)$ and positive on $(y_0,\infty)$. If $I(y,t)$ changes sign from negative on $(0,y_0)$ to positive on $(y_0,\infty)$, both factors have the same sign everywhere on $[0,\infty)$, so the integrand in \eqref{eq:karlin_lever} is non-negative and strictly positive on an open set, yielding $W(d,t) > 0$.
+Part (a) follows from $\int_0^\infty I(y,\gamma_k)\,\dd y = \frac{1}{16}|\Xi(\gamma_k)|^2 = 0$ and Hudson's characterization \cite{Hudson1974} of non-negative Wigner distributions. Subtracting $16 y_0\sinh(2d y_0)\int_0^\infty I(y,t)\,\dd y = y_0\sinh(2d y_0)|\Xi(t)|^2$ from $W(d,t) = 16\int_0^\infty y\sinh(2d y)I(y,t)\,\dd y$ gives \eqref{eq:karlin_subtraction}; since $y \mapsto y\sinh(2d y)$ is strictly increasing on $[0,\infty)$ for $d > 0$, $(y\sinh(2d y) - y_0\sinh(2d y_0))I(y,t) \ge 0$ everywhere under the single-crossing hypothesis.
 \end{proof}
 
-\section{Holomorphic continuation and the Cauchy contour box in \texorpdfstring{$|\Ima(x)| < \pi/4$}{|Im(x)| < pi/4}}\label{sec:cauchy}
+\begin{remark}[Failure of single-crossing for $k \ge 3$]\label{rem:multicrossing}
+As verified numerically in Table~\ref{tab:zeros_lever}, the single-crossing hypothesis in Proposition~\ref{prop:hudson_karlin}(b) holds at $\gamma_1$ and $\gamma_2$, where $I(y,\gamma_k)$ crosses zero once on $(0, 1.35]$, but \emph{fails already at $\gamma_3 \approx 25.010858$}, where $I(y,\gamma_3)$ exhibits $5$ sign changes ($6$ at $\gamma_4$, $7$ at $\gamma_5$). Thus \eqref{eq:karlin_subtraction} does not provide a general positivity proof for $W(d,\gamma_k)$.
+\end{remark}
 
-To eliminate the oscillatory cancellation in $I(y,\omega) = \int_{\mathbb{R}} G_y(x)\cos(\omega x)\,\dd x$, we deform the line of integration into the complex plane $x = \xi + \ii\eta$. A rigorous complex-analytic treatment requires avoiding non-holomorphic operations such as $u \mapsto |u|$ and verifying absolute convergence and vertical wall bounds prior to shifting the contour.
+\section{Holomorphic strip, Cauchy contour shift, and strip zeros of $\Phi$}\label{sec:holomorphic}
 
-\begin{lemma}[Holomorphic continuation and even parity of $\Phi(u)$ in $|\Ima(u)| < \pi/8$]\label{lem:parity}
-The series \eqref{eq:Phi_def} defines a holomorphic function $\Phi(u)$ on the open horizontal strip
-\begin{equation}\label{eq:strip_u}
-\mathcal{S}_{\pi/8}^{(u)} := \left\{u = \sigma + \ii\tau \in \mathbb{C} : |\tau| < \frac{\pi}{8}\right\},
-\end{equation}
-and satisfies the exact holomorphic evenness identity $\Phi(-u) = \Phi(u)$ for all $u \in \mathcal{S}_{\pi/8}^{(u)}$.
+To deform the $x$-integral into the complex plane $z = \xi + \ii\eta$, one must establish holomorphy of $\Phi(u)$ without real-axis absolute values, justify the vertical Cauchy walls, and locate the zeros of $\Phi(u)$ inside the convergence strip.
+
+\begin{lemma}[Holomorphic parity on $|\Ima(u)| < \pi/8$]\label{lem:holo_parity}
+The series \eqref{eq:Phi_def} defines a holomorphic function $\Phi(u)$ on the open strip $\mathcal{U}_{\pi/8} := \{u = \sigma + \ii\tau \in \mathbb{C} : |\tau| < \pi/8\}$ satisfying $\Phi(-u) = \Phi(u)$ and $\Phi(\bar{u}) = \overline{\Phi(u)}$ for all $u \in \mathcal{U}_{\pi/8}$.
 \end{lemma}
 
 \begin{proof}
-For $u = \sigma + \ii\tau \in \mathcal{S}_{\pi/8}^{(u)}$, we have $|4\tau| < \pi/2$, so $\cos(4\tau) > 0$ and $\Rea(\ee^{4u}) = \ee^{4\sigma}\cos(4\tau) > 0$. On any compact subset $K \subset \mathcal{S}_{\pi/8}^{(u)}$, there exist constants $\sigma_{\min} \le \sigma \le \sigma_{\max}$ and $\delta_K := \min_{K} \cos(4\tau) > 0$ such that
-\[
-\big|\phi_n(u)\big| \le \left(2\pi^2 n^4 \ee^{9\sigma_{\max}} + 3\pi n^2 \ee^{5\sigma_{\max}}\right)\exp\!\left(-\pi n^2 \ee^{4\sigma_{\min}}\delta_K\right).
-\]
-By the Weierstrass M-test, the series $\sum_{n=1}^\infty \phi_n(u)$ converges absolutely and uniformly on $K$, so $\Phi(u)$ is holomorphic on $\mathcal{S}_{\pi/8}^{(u)}$. Furthermore, for $\Rea(\psi) > 0$, Jacobi's theta function $\theta(\psi) = 1 + 2\sum_{n=1}^\infty \ee^{-\pi n^2 \psi}$ is holomorphic and obeys Poisson summation $\theta(\psi^{-1}) = \psi^{1/2}\theta(\psi)$. Setting $\psi = \ee^{4u}$ with $|\Ima(u)| < \pi/8$ ensures $\Rea(\ee^{\pm 4u}) > 0$, so $\theta(\ee^{-4u}) = \ee^{2u}\theta(\ee^{4u})$, or equivalently $f(u) := \ee^u\theta(\ee^{4u}) = \ee^{-u}\theta(\ee^{-4u}) = f(-u)$. Applying the second-order differential operator $\frac{1}{16}(\partial_u^2 - 1)$ term-by-term to $f(u) = \ee^u + 2\sum_{n=1}^\infty \ee^u\ee^{-\pi n^2\ee^{4u}}$ annihilates the $n=0$ term $(\partial_u^2 - 1)\ee^u = 0$ and produces
-\begin{equation}\label{eq:jacobi_diff_id}
-\Phi(u) = \frac{1}{16}\left(\frac{\dd^2}{\dd u^2} - 1\right)\!\Big[\ee^u\,\theta(\ee^{4u})\Big] = \frac{1}{16}\left(\frac{\dd^2}{\dd u^2} - 1\right)f(u).
-\end{equation}
-Since $f(-u) = f(u)$ and $\partial_u^2 - 1$ is invariant under $u \mapsto -u$, it follows identically that $\Phi(-u) = \Phi(u)$ for all $u \in \mathcal{S}_{\pi/8}^{(u)}$.
+For $u = \sigma + \ii\tau$ with $|\tau| < \pi/8$, $\Rea(\ee^{4u}) = \ee^{4\sigma}\cos(4\tau) > 0$. On any compact $K \subset \mathcal{U}_{\pi/8}$, $\sigma \ge \sigma_0$ and $\cos(4\tau) \ge \delta_0 > 0$, so $|\exp(-\pi n^2\ee^{4u})| \le \exp(-\pi n^2\ee^{4\sigma_0}\delta_0)$, giving uniform convergence of \eqref{eq:Phi_def} by Weierstrass's theorem. Setting $f(u) := \ee^u\theta(\ee^{4u})$ for $\Rea(\ee^{4u}) > 0$, direct differentiation of $f(u) = \ee^u + 2\sum_{n=1}^\infty \ee^u\exp(-\pi n^2\ee^{4u})$ yields $\frac{1}{16}(f''(u) - f(u)) = \Phi(u)$. Jacobi's theta transformation $\theta(1/w) = w^{1/2}\theta(w)$ (principal branch on $\Rea w > 0$) evaluated at $w = \ee^{4u}$ gives $\theta(\ee^{-4u}) = \ee^{2u}\theta(\ee^{4u})$, so $f(-u) = \ee^{-u}\theta(\ee^{-4u}) = \ee^u\theta(\ee^{4u}) = f(u)$. Differentiating twice gives $\Phi(-u) = \Phi(u)$, and real coefficients on $\mathbb{R}$ give $\Phi(\bar{u}) = \overline{\Phi(u)}$.
 \end{proof}
 
-\subsection{Pre-move justification and double-exponential vertical wall bounds}\label{subsec:pre_move}
-
-Before shifting the contour of $I(y,\omega) = \int_{-\infty}^\infty G_y(x)\cos(\omega x)\,\dd x$, we note that one cannot deform $\cos(\omega x) = \frac{1}{2}(\ee^{\ii\omega x} + \ee^{-\ii\omega x})$ directly into the upper half-plane $\Ima(x) = \eta > 0$, because the component $\ee^{-\ii\omega(\xi+\ii\eta)} = \ee^{+\omega\eta}\ee^{-\ii\omega\xi}$ grows exponentially with $\eta$ while $G_y(\xi+\ii\eta)$ remains bounded of order $\mathcal{O}(1)$ near $\xi = 0$. Instead, we first exploit the even symmetry $G_y(-x) = G_y(x)$ on the real axis $\eta = 0$: since $G_y(x)\sin(\omega x)$ is odd and belongs to $L^1(\mathbb{R})$, its integral over $\mathbb{R}$ vanishes identically, allowing the pre-move replacement
-\begin{equation}\label{eq:pre_move}
-I(y,\omega) = \int_{-\infty}^\infty G_y(x)\cos(\omega x)\,\dd x = \Rea\!\left(\lim_{L\to\infty}\int_{-L}^L G_y(x)\,\ee^{\ii\omega x}\,\dd x\right).
-\end{equation}
-
-We now apply Cauchy's integral theorem to the holomorphic integrand $F_{y,\omega}(z) := G_y(z)\,\ee^{\ii\omega z}$ around the closed rectangular contour $\partial\mathcal{R}_{L,\eta}$ with vertices $-L, +L, +L+\ii\eta, -L+\ii\eta$, where $L > |y| + 1$ and $0 < \eta < \pi/4$. Since $z = \xi + \ii\tau \in \mathcal{R}_{L,\eta}$ implies $|\Ima(\frac{z\pm y}{2})| = \frac{\tau}{2} \le \frac{\eta}{2} < \frac{\pi}{8}$, Lemma~\ref{lem:parity} guarantees that $F_{y,\omega}(z)$ is holomorphic throughout an open neighborhood of $\mathcal{R}_{L,\eta}$, so $\oint_{\partial\mathcal{R}_{L,\eta}} F_{y,\omega}(z)\,\dd z = 0$.
-
-\begin{proposition}[Vertical wall decay and natural boundary at $|\eta| = \pi/4$]\label{prop:wall_decay}
-Fix $y \in \mathbb{R}$, $\omega > 0$, and $0 < \eta < \pi/4$. For every $L \ge |y| + 1$ and $\tau \in [0,\eta]$, the convolution kernel on the vertical segments $z = \pm L + \ii\tau$ obeys the uniform double-exponential bound
-\begin{equation}\label{eq:vertical_wall_bound}
-\big|G_y(\pm L + \ii\tau)\big| \le C_2\,\ee^{9L}\exp\!\Big(-2\pi\cosh(2y)\,\ee^{2L}\cos(2\eta)\Big),
-\end{equation}
-where $C_2 = 16\pi^4$. Consequently, the vertical side-wall integrals $\mathcal{J}_{\pm}(L,\eta) := \int_0^\eta F_{y,\omega}(\pm L + \ii\tau)\,\ii\,\dd\tau$ satisfy $|\mathcal{J}_{\pm}(L,\eta)| \to 0$ double-exponentially as $L \to \infty$. Conversely, on the boundary lines $\eta = \pm\pi/4$, $\cos(2\eta) = \cos(\pi/2) = 0$, so $|\exp(-\pi n^2\ee^{2(\xi\pm y)}\ee^{\pm\ii\pi/2})| = 1$ for all $n \ge 1$ and the series \eqref{eq:Phi_def} diverges everywhere on $\Ima(z) = \pm\pi/4$.
-\end{proposition}
-
-\begin{proof}
-By the holomorphic evenness $G_y(-z) = G_y(z)$, it suffices to bound $z = +L + \ii\tau$ with $L \ge |y| + 1$ and $\tau \in [0,\eta]$. Here both arguments $u_\pm = \frac{L \pm y + \ii\tau}{2}$ satisfy $\Rea(u_\pm) = \frac{L\pm y}{2} \ge \frac{1}{2} > 0$ and $\cos(4\Ima(u_\pm)) = \cos(2\tau) \ge \cos(2\eta) > 0$. Since $2\pi^2 n^4\ee^{9\sigma} + 3\pi n^2\ee^{5\sigma} \le 3\pi^2 n^4\ee^{9\sigma}$ for $\sigma \ge 1/2$, we have
-\[
-\big|\Phi(u_\pm)\big| \le 3\pi^2\ee^{9(L\pm y)/2}\sum_{n=1}^\infty n^4\ee^{-\pi n^2\ee^{2(L\pm y)}\cos(2\eta)} \le 4\pi^2\ee^{9(L\pm y)/2}\exp\!\left(-\pi\ee^{2(L\pm y)}\cos(2\eta)\right),
-\]
-where the tail $n \ge 2$ is bounded by Lemma~\ref{lem:tail_bound} in Appendix~\ref{app:derivatives}. Multiplying the bounds for $\Phi(u_+)$ and $\Phi(u_-)$ and noting that $\ee^{2(L+y)} + \ee^{2(L-y)} = 2\cosh(2y)\ee^{2L}$ yields \eqref{eq:vertical_wall_bound}. Integrating over $\tau \in [0,\eta]$ with $|\ee^{\ii\omega(\pm L + \ii\tau)}| = \ee^{-\omega\tau} \le 1$ gives $|\mathcal{J}_{\pm}(L,\eta)| \le \eta C_2\ee^{9L}\exp(-2\pi\cosh(2y)\ee^{2L}\cos(2\eta)) \to 0$ as $L \to \infty$. At $\eta = \pi/4$, $\cos(2\eta) = 0$, so the Gaussian factor $\exp(-\pi n^2 \ee^{2(\xi\pm y)}\cos(2\eta))$ has unit modulus and the terms of \eqref{eq:Phi_def} grow as $n^4 \to \infty$.
-\end{proof}
-
-The bookkeeping of the four segments of the rectangular contour $\partial\mathcal{R}_{L,\eta}$ is summarized below:
-
-\begin{center}
-\footnotesize
-\begin{tabular}{llll}
-\textbf{Contour Segment} & \textbf{Parameterization} & \textbf{Asymptotic Bound as $L \to \infty$} & \textbf{Limit} \\
-\hline
-Bottom $\Gamma_{\mathrm{bot}}$ & $z = \xi \in [-L, L]$ & $\int_{-L}^L G_y(\xi)\ee^{\ii\omega\xi}\,\dd\xi + \mathcal{O}(\ee^{-2\pi\cosh(2y)\ee^{2L}})$ & $+I(y,\omega)$ \\
-Right wall $\Gamma_{\mathrm{right}}$ & $z = L + \ii\tau$, $\tau \in [0, \eta]$ & $\le \eta C_2 \ee^{9L}\exp(-2\pi\cosh(2y)\ee^{2L}\cos(2\eta))$ & $0$ \\
-Top wall $\Gamma_{\mathrm{top}}$ & $z = \xi + \ii\eta$, $\xi \in [L, -L]$ & $-\ee^{-\omega\eta}\int_{-L}^L G_y(\xi+\ii\eta)\ee^{\ii\omega\xi}\,\dd\xi$ & $-I(y,\omega)$ \\
-Left wall $\Gamma_{\mathrm{left}}$ & $z = -L + \ii\tau$, $\tau \in [\eta, 0]$ & $\le \eta C_2 \ee^{9L}\exp(-2\pi\cosh(2y)\ee^{2L}\cos(2\eta))$ & $0$ \\
-\end{tabular}
-\end{center}
-
-\subsection{Hermitian contour symmetry and imaginary-axis positivity}\label{subsec:hermitian}
-
-\begin{proposition}[Hermitian contour symmetry]\label{prop:hermitian}
-For every $y \in \mathbb{R}$ and every $\xi + \ii\eta \in \mathcal{S}_{\pi/4}$, the convolution kernel $G_y$ satisfies
-\begin{equation}\label{eq:hermitian_sym}
-G_y(-\xi + \ii\eta) = \overline{G_y(\xi + \ii\eta)}, \qquad G_y(\ii\eta) = \left|\Phi\!\left(\frac{y+\ii\eta}{2}\right)\right|^2 \ge 0.
-\end{equation}
-Consequently, $\Rea G_y(\xi+\ii\eta)$ is an even function of $\xi$, $\Ima G_y(\xi+\ii\eta)$ is an odd function of $\xi$, and the shifted representation \eqref{eq:shifted_I_thm} reduces to the one-sided integral
-\begin{equation}\label{eq:shifted_I_onesided}
-I(y,\omega) = 2\ee^{-\omega\eta}\int_0^\infty \Big[\Rea G_y(\xi+\ii\eta)\cos(\omega\xi) - \Ima G_y(\xi+\ii\eta)\sin(\omega\xi)\Big]\dd\xi.
-\end{equation}
-\end{proposition}
-
-\begin{proof}
-Since $\Phi(u)$ is real-valued for real $u$, the Schwarz reflection principle gives $\Phi(\overline{u}) = \overline{\Phi(u)}$ for all $u \in \mathcal{S}_{\pi/8}^{(u)}$. Combined with Lemma~\ref{lem:parity} ($\Phi(-u) = \Phi(u)$), this implies $G_y(\overline{z}) = \overline{G_y(z)}$ and $G_y(-z) = G_y(z)$. Therefore, for $z = \xi + \ii\eta \in \mathcal{S}_{\pi/4}$,
-\[
-G_y(-\xi + \ii\eta) = G_y\big(-(\xi - \ii\eta)\big) = G_y(\xi - \ii\eta) = G_y(\overline{z}) = \overline{G_y(\xi + \ii\eta)}.
-\]
-Evaluating at $\xi = 0$ and using $\Phi(\frac{-y+\ii\eta}{2}) = \Phi(-\frac{y-\ii\eta}{2}) = \Phi(\frac{y-\ii\eta}{2}) = \overline{\Phi(\frac{y+\ii\eta}{2})}$ yields $G_y(\ii\eta) = |\Phi(\frac{y+\ii\eta}{2})|^2 \ge 0$. Since $\Rea[G_y(\xi+\ii\eta)\ee^{\ii\omega\xi}] = \Rea G_y(\xi+\ii\eta)\cos(\omega\xi) - \Ima G_y(\xi+\ii\eta)\sin(\omega\xi)$ is the difference of two products of same-parity functions of $\xi$, it is an even function of $\xi$, which gives \eqref{eq:shifted_I_onesided}.
-\end{proof}
-
-\section{Pitchfork saddle-point coalescence and elimination of real-axis cancellation}\label{sec:saddle}
-
-We now analyze the complex saddle points of the holomorphic phase function $\Psi_{y,\omega}(x) := \ln G_y(x) + \ii\omega x$ inside the strip $\mathcal{S}_{\pi/4}$. Differentiating with respect to $x$ yields the exact stationary-phase equation
-\begin{equation}\label{eq:exact_saddle_eq}
-\Psi_{y,\omega}'(x) = \frac{\partial}{\partial x}\ln G_y(x) + \ii\omega = \frac{1}{2}\left[\frac{\Phi'}{\Phi}\!\left(\frac{x+y}{2}\right) + \frac{\Phi'}{\Phi}\!\left(\frac{x-y}{2}\right)\right] + \ii\omega = 0.
-\end{equation}
-
-\subsection{Asymptotic two-regime structure and pitchfork bifurcation}\label{subsec:pitchfork}
-
-To understand why the roots of \eqref{eq:exact_saddle_eq} transition from an off-axis pair to a single imaginary-axis saddle as $|y|$ increases, we examine the two natural asymptotic regimes of $G_y(x) = \Phi(\frac{x+y}{2})\Phi(\frac{x-y}{2})$:
-
-\begin{proposition}[Outer two-saddle regime vs.\ inner coalesced regime]\label{prop:two_regimes}
-Let $\omega > 0$ and $y \ge 0$.
+\begin{proposition}[Vertical wall decay, Hermitian symmetry, and strip zeros of $\Phi$]\label{prop:wall_decay}
+Fix $y \in \mathbb{R}$ and set $G_y(z) := \Phi\!\left(\frac{z+y}{2}\right)\Phi\!\left(\frac{z-y}{2}\right)$ for $z = \xi + \ii\eta \in \mathcal{S}_{\pi/4} = \{|\eta| < \pi/4\}$. Then:
 \begin{enumerate}
-\item[\textup{(a)}] \textbf{Outer regime ($\xi > y \ge 0$):} When $\Rea(x) = \xi > y$, both arguments $u_\pm = \frac{x\pm y}{2}$ have positive real part $\frac{\xi\pm y}{2} > 0$. Retaining the leading $n=1$ mode $\phi_1(u_\pm) \approx 2\pi^2\ee^{9u_\pm}\exp(-\pi\ee^{4u_\pm})$ gives $G_y(x) \approx 4\pi^4\ee^{9x}\ee^{-2\pi\cosh(2y)\ee^{2x}}$, whose stationary-phase condition $4\pi\cosh(2y)\ee^{2x_*} = 9 + \ii\omega$ yields the conjugate-reflected off-axis pair $x_*^\pm = \pm\xi_*^{\mathrm{out}}(y,\omega) + \ii\eta_*^{\mathrm{out}}(\omega)$ with
-\begin{equation}\label{eq:outer_saddle}
-\xi_*^{\mathrm{out}}(y,\omega) = \frac{1}{2}\ln\!\left(\frac{\sqrt{\omega^2 + 81}}{4\pi\cosh(2y)}\right), \qquad \eta_*^{\mathrm{out}}(\omega) = \frac{1}{2}\arctan\!\left(\frac{\omega}{9}\right) = \frac{\pi}{4} - \frac{1}{2}\arctan\!\left(\frac{9}{\omega}\right) < \frac{\pi}{4}.
+\item[\textup{(a)}] \textbf{Double-exponential wall decay and contour invariance:} For every $\eta \in [0,\pi/4)$ and all sufficiently large $L > |y| + 1$,
+\begin{equation}\label{eq:wall_bound}
+\sup_{|\tau| \le \eta} \big|G_y(\pm L + \ii\tau)\big| \le 16\pi^4 \ee^{9L}\exp\!\Big(-2\pi\cosh(2y)\,\ee^{2L}\cos(2\eta)\Big),
 \end{equation}
-\item[\textup{(b)}] \textbf{Inner reflected regime ($|\xi| < y$):} Near the imaginary axis ($|\xi| < y$), invoking the holomorphic parity $\Phi(\frac{x-y}{2}) = \Phi(\frac{y-x}{2})$ ensures that both arguments $v_\pm = \frac{y\pm x}{2}$ have strictly positive real part $\frac{y\pm\xi}{2} > 0$. The leading $n=1$ approximation then takes the even-in-$x$ form
-\begin{equation}\label{eq:inner_G_approx}
-G_y(x) = \Phi\!\left(\frac{y+x}{2}\right)\Phi\!\left(\frac{y-x}{2}\right) \approx 4\pi^4\ee^{9y}\exp\!\Big(-2\pi\ee^{2y}\cosh(2x)\Big),
-\end{equation}
-whose stationary-phase equation $-4\pi\ee^{2y}\sinh(2x_*) + \ii\omega = 0$, i.e., $\sinh(2\xi_*)\cos(2\eta_*) + \ii\cosh(2\xi_*)\sin(2\eta_*) = \ii\frac{\omega}{4\pi\ee^{2y}}$, undergoes an exact pitchfork bifurcation at $y_c^{\mathrm{inner}}(\omega) = \frac{1}{2}\ln(\frac{\omega}{4\pi})$: for $y \ge y_c^{\mathrm{inner}}(\omega)$, the saddle lies purely on the imaginary axis at $\xi_* = 0$ with height
-\begin{equation}\label{eq:inner_saddle_height}
-\eta_*^{\mathrm{inner}}(y,\omega) = \frac{1}{2}\arcsin\!\left(\frac{\omega}{4\pi\ee^{2y}}\right) \in \left(0, \frac{\pi}{4}\right].
-\end{equation}
+so the vertical wall integrals vanish as $L \to \infty$ and \eqref{eq:shifted_I_thm} holds for every $\eta \in (0,\pi/4)$ and $t > 0$. On $|\eta| = \pi/4$, $\cos(2\eta) = 0$ and the defining series \eqref{eq:Phi_def} ceases to converge.
+\item[\textup{(b)}] \textbf{Hermitian reflection symmetry:} For all $\xi \in \mathbb{R}$ and $|\eta| < \pi/4$, $G_y(-\xi + \ii\eta) = \overline{G_y(\xi + \ii\eta)}$, and on the imaginary axis $G_y(\ii\eta) = \big|\Phi(\frac{y+\ii\eta}{2})\big|^2 \ge 0$.
+\item[\textup{(c)}] \textbf{Existence of zeros of $\Phi(u)$ inside $\mathcal{U}_{\pi/8}$:} The kernel $\Phi(u)$ vanishes inside $\mathcal{U}_{\pi/8}$. Specifically, on the imaginary axis $u = \ii\tau$ ($\tau \in [0,\pi/8)$), $\Phi(\ii\tau)$ is real-valued, satisfies $\Phi(0) > 0$, and tends to $0^-$ as $\tau \to (\pi/8)^-$, vanishing at $\tau_0 = 0.31941502680029678874\dots < \pi/8$; hence $G_0(\ii\eta_0) = 0$ at $\eta_0 = 2\tau_0 \approx 0.6388300536 < \pi/4$. Moreover, $\Phi(u)$ also has off-axis zeros in $\mathcal{U}_{\pi/8}$, such as $u_1 \approx 0.1278237567 + 0.3477699161\ii$, producing zeros of $G_y(z)$ at $z = \pm 2u_1 \pm y$ with imaginary height $\eta_1 = 2\Ima(u_1) \approx 0.6955398322 < \pi/4$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-In part (a), differentiating $\ln(4\pi^4) + 9x - 2\pi\cosh(2y)\ee^{2x} + \ii\omega x$ with respect to $x$ gives $9 - 4\pi\cosh(2y)\ee^{2\xi_*+\ii 2\eta_*} + \ii\omega = 0$. Equating real and imaginary parts yields $4\pi\cosh(2y)\ee^{2\xi_*}\cos(2\eta_*) = 9$ and $4\pi\cosh(2y)\ee^{2\xi_*}\sin(2\eta_*) = \omega$, from which \eqref{eq:outer_saddle} follows by division and taking moduli. By Proposition~\ref{prop:hermitian}, $\overline{\Psi_{y,\omega}'(x)} = -\Psi_{y,\omega}'(-\overline{x})$, so $x_*^+$ is a root of \eqref{eq:exact_saddle_eq} if and only if $x_*^- = -\overline{x_*^+} = -\xi_* + \ii\eta_*$ is a root. In part (b), for $|\xi| < y$, replacing $\Phi(\frac{x-y}{2})$ by $\Phi(\frac{y-x}{2})$ via Lemma~\ref{lem:parity} gives $\frac{9(y+x)}{2} + \frac{9(y-x)}{2} = 9y$ and $\ee^{2(y+x)} + \ee^{2(y-x)} = 2\ee^{2y}\cosh(2x)$, establishing \eqref{eq:inner_G_approx}. For $y \ge \frac{1}{2}\ln(\frac{\omega}{4\pi})$, $\frac{\omega}{4\pi\ee^{2y}} \le 1$, so $\xi_* = 0$ and $\sin(2\eta_*) = \frac{\omega}{4\pi\ee^{2y}}$ solve $\sinh(2x_*) = \ii\frac{\omega}{4\pi\ee^{2y}}$ uniquely in $\eta_* \in (0,\pi/4]$.
-\end{proof}
+(a) For $z = L + \ii\tau$ with $0 \le |\tau| \le \eta < \pi/4$ and $L > |y| + 1$, let $u_\pm = \frac{L \pm y}{2} + \ii\frac{\tau}{2}$ and $\sigma_\pm = \frac{L \pm y}{2} > \frac{1}{2}$. Since $\cos(2\tau) \ge \cos(2\eta) > 0$ and $2\pi^2 n^4\ee^{9\sigma_\pm} > 3\pi n^2\ee^{5\sigma_\pm}$, bounding the $n \ge 2$ tail of \eqref{eq:Phi_def} geometrically yields $|\Phi(u_\pm)| \le 4\pi^2\ee^{9\sigma_\pm}\exp(-\pi\ee^{4\sigma_\pm}\cos(2\tau))$ for $L$ large enough that the tail is at most the $n=1$ bound. Multiplying $|\Phi(u_+)|$ and $|\Phi(u_-)|$ and using $\ee^{2(L+y)} + \ee^{2(L-y)} = 2\cosh(2y)\ee^{2L}$ gives \eqref{eq:wall_bound}; $G_y(-z) = G_y(z)$ covers $-L + \ii\tau$. Since $I(y,t) = \Rea\int_{\mathbb{R}} G_y(\xi)\ee^{2\ii t\xi}\,\dd\xi$ and $z \mapsto G_y(z)\ee^{2\ii t z}$ is holomorphic on $\mathcal{S}_{\pi/4}$ (zeros of $G_y$ do not affect holomorphy of $G_y(z)\ee^{2\ii t z}$), Cauchy's theorem on $[-L,L]\times[0,\eta]$ as $L\to\infty$ proves \eqref{eq:shifted_I_thm}.
 
-We now prove the exact pitchfork bifurcation theorem for the full kernel $G_y(x)$ without any $n=1$ truncation.
-
-\begin{theorem}[Exact pitchfork bifurcation on the imaginary axis]\label{thm:pitchfork_exact}
-Along the imaginary axis $x = \ii\eta$ with $\eta \in (0,\pi/4)$ and $y > 0$ outside the zeros of $\Phi(\frac{y+\ii\eta}{2})$, the real log-amplitude $L_y(\eta) := \ln G_y(\ii\eta) = 2\ln\big|\Phi\!\left(\frac{y+\ii\eta}{2}\right)\big|$ satisfies the Cauchy--Riemann identities
-\begin{equation}\label{eq:CR_imag_axis}
-\frac{\partial}{\partial x}\ln G_y(\ii\eta) = -\ii L_y'(\eta) = \ii\,\Ima\!\left[\frac{\Phi'}{\Phi}\!\left(\frac{y+\ii\eta}{2}\right)\right], \qquad \left.\frac{\partial^2}{\partial\xi^2}\ln G_y(\xi+\ii\eta)\right|_{\xi=0} = -L_y''(\eta).
-\end{equation}
-Consequently:
-\begin{enumerate}
-\item[\textup{(i)}] A point $x_* = \ii\eta_*$ on the imaginary axis is a stationary point of $\Psi_{y,\omega}(x)$ if and only if $L_y'(\eta_*) = \omega$, and the horizontal contour $\xi \mapsto \xi + \ii\eta_*$ is a local steepest-descent maximum of $\Rea\Psi_{y,\omega}(\xi+\ii\eta_*)$ at $\xi = 0$ if and only if $\partial_\xi^2 \ln G_y(\ii\eta_*) = -L_y''(\eta_*) < 0$ (i.e., $L_y''(\eta_*) > 0$).
-\item[\textup{(ii)}] Near any bifurcation point $(y_c, \eta_c)$ where $L_{y_c}'(\eta_c) = \omega$, $L_{y_c}''(\eta_c) = 0$, $\partial_y L_{y_c}'(\eta_c) > 0$, and $L_{y_c}'''(\eta_c) < 0$, the local holomorphic Taylor expansion of $\ln G_y(\ii\eta_c + \Delta z)$ in $\Delta z = \xi + \ii(\eta - \eta_c)$ around $\Delta z = 0$ takes the normal form
-\begin{equation}\label{eq:pitchfork_normal_form}
-\ln G_y(\ii\eta_c + \Delta z) = L_y(\eta_c) - \ii L_y'(\eta_c)\,\Delta z - \frac{1}{2}L_y''(\eta_c)\,(\Delta z)^2 + \frac{\ii}{6}L_y'''(\eta_c)\,(\Delta z)^3 + \frac{a_4}{24}(\Delta z)^4 + \mathcal{O}\big((\Delta z)^5\big),
-\end{equation}
-where $a_4 := \partial_z^4\ln G_{y_c}(\ii\eta_c) = L_{y_c}^{(4)}(\eta_c)$. Setting $\Psi_{y,\omega}'(\ii\eta_c + \Delta z) = 0$ yields the quadratic coalescence law
-\begin{equation}\label{eq:quadratic_coalescence}
-(\Delta z)^2 = \big(\xi_* + \ii(\eta_* - \eta_c)\big)^2 = K^2\,(y_c - y) + \mathcal{O}\big(|y - y_c|^{3/2}\big), \qquad K := \sqrt{\frac{2\,\partial_y L_{y_c}'(\eta_c)}{-L_{y_c}'''(\eta_c)}} > 0,
-\end{equation}
-which splits into two conjugate-reflected off-axis saddles $\xi_*^\pm(y) = \pm K\sqrt{y_c - y} + \mathcal{O}(y_c - y)$ for $y < y_c$ and into the imaginary-axis steepest-descent branch $\xi_* \equiv 0$, $\eta_*(y) = \eta_c - K\sqrt{y - y_c} + \mathcal{O}(y - y_c)$ with $\partial_\xi^2\ln G_y(\ii\eta_*) = -L_y''(\eta_*) < 0$ for $y > y_c$.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-By Proposition~\ref{prop:hermitian}, $\ln G_y(-\xi+\ii\eta) = \overline{\ln G_y(\xi+\ii\eta)}$. Expanding the holomorphic function $z \mapsto \ln G_y(z)$ in powers of $\Delta z = z - \ii\eta_c = \xi + \ii(\eta - \eta_c)$ around $z = \ii\eta_c$ and noting that $\partial_z = \partial_\xi = -\ii\partial_\eta$ gives $\partial_z^k \ln G_y(\ii\eta_c) = (-\ii)^k L_y^{(k)}(\eta_c)$, which yields both identities in \eqref{eq:CR_imag_axis} and the expansion \eqref{eq:pitchfork_normal_form}. Differentiating \eqref{eq:pitchfork_normal_form} with respect to $\Delta z$ at $(y,\eta_c)$ and using $L_y'(\eta_c) = \omega + \partial_y L_{y_c}'(\eta_c)(y - y_c) + \mathcal{O}((y-y_c)^2)$ and $L_{y_c}''(\eta_c) = 0$ gives
+(b) Applying $\Phi(-u)=\Phi(u)$ and $\Phi(\bar{u})=\overline{\Phi(u)}$ gives
 \[
--\ii\,\partial_y L_{y_c}'(\eta_c)\,(y - y_c) + \frac{\ii}{2}L_{y_c}'''(\eta_c)\,(\Delta z)^2 + \mathcal{O}\big(|\Delta z|^3 + |y - y_c||\Delta z|\big) = 0,
+G_y(-\xi+\ii\eta) = \Phi\!\left(\frac{-\xi+y+\ii\eta}{2}\right)\Phi\!\left(\frac{-\xi-y+\ii\eta}{2}\right)
+= \Phi\!\left(\overline{\frac{\xi-y+\ii\eta}{2}}\right)\Phi\!\left(\overline{\frac{\xi+y+\ii\eta}{2}}\right) = \overline{G_y(\xi+\ii\eta)},
 \]
-which rearranges immediately to \eqref{eq:quadratic_coalescence}. For $y < y_c$, $K^2(y_c - y) > 0$, so the two square roots have real parts $\xi_*^\pm = \pm K\sqrt{y_c - y} \neq 0$. For $y > y_c$, $K^2(y_c - y) < 0$, so $\Delta z = \pm\ii K\sqrt{y - y_c}$ is purely imaginary ($\xi_* \equiv 0$), and the lower branch $\eta_*(y) = \eta_c - K\sqrt{y - y_c}$ satisfies $L_y''(\eta_*(y)) \approx -L_{y_c}'''(\eta_c) K\sqrt{y - y_c} > 0$, whence $\partial_\xi^2\ln G_y(\ii\eta_*(y)) = -L_y''(\eta_*(y)) < 0$.
+and setting $\xi = 0$ gives $G_y(\ii\eta) = \Phi(\frac{y+\ii\eta}{2})\overline{\Phi(\frac{y+\ii\eta}{2})} = |\Phi(\frac{y+\ii\eta}{2})|^2 \ge 0$.
+
+(c) By Lemma~\ref{lem:holo_parity}, $\Phi(-\ii\tau) = \Phi(\ii\tau) = \overline{\Phi(\ii\tau)}$, so $\Phi(\ii\tau) \in \mathbb{R}$ for $|\tau| < \pi/8$, with $\Phi(0) \approx 0.446697 > 0$. Evaluating the absolutely convergent series \eqref{eq:Phi_def} directly at $\tau = 0.31$ and $\tau = 0.35$ (where $\cos(4\tau) > 0.169 > 0$ gives rapid geometric decay) yields $\Phi(0.31\ii) \approx +1.892333 > 0$ and $\Phi(0.35\ii) \approx -13.866622 < 0$ (reflecting the sharp drop of $f(\ii\tau) = \ee^{\ii\tau}\theta(\ee^{4\ii\tau}) \in \mathbb{R}$ toward $0$ as $\ee^{4\ii\tau} \to \ii$, where $\theta_4(\varepsilon) = 2\varepsilon^{-1/2}\sum_{m=0}^\infty \ee^{-\pi(m+1/2)^2/\varepsilon} \to 0$). By the intermediate value theorem, $\Phi(\ii\tau_0) = 0$ for some $\tau_0 \in (0.31, 0.35)$, refined to $\tau_0 \approx 0.3194150268$. The off-axis zero $u_1 \approx 0.1278237567 + 0.3477699161\ii$ ($|\Phi'(u_1)| \approx 1593.82$) is certified via Cauchy's argument principle on $|u - u_1| = 0.01$ inside $\mathcal{U}_{\pi/8}$.
 \end{proof}
 
-\begin{remark}[Elimination of two-saddle interference for $|y| \ge y_c(\omega)$]\label{rem:interference}
-For $0 \le |y| < y_c(\omega)$, the conjugate symmetry $G_y(-\overline{x_*^+}) = \overline{G_y(x_*^+)}$ implies that the steepest-descent contributions $Z_\pm(y,\omega)$ of the two off-axis saddles $x_*^\pm = \pm\xi_* + \ii\eta_*$ are complex conjugates, so their sum $I(y,\omega) \approx 2|Z_+(y,\omega)|\cos(\Theta_{\mathrm{RS}}(y,\omega))$ oscillates with $y$. Once $|y| \ge y_c(\omega)$, the two saddles coalesce onto $\xi_* = 0$, where $G_y(\ii\eta_*) = |\Phi(\frac{y+\ii\eta_*}{2})|^2 > 0$ has zero phase and no second saddle exists to produce destructive interference.
+\begin{remark}[Boundary $|\eta|=\pi/4$ and logarithmic singularities of $\ln G_y$]\label{rem:log_sing}
+Two cautions are in order. First, while $w = \ii y$ ($y \in \mathbb{R}$) is classically a natural boundary of $\theta(w)$ due to its dense modular cusps at rational $y$, the mere fact that $|\exp(-\pi n^2\ee^{2L}\ii\sin 2\eta)| = 1$ at $\cos(2\eta)=0$ only shows divergence of the defining series \eqref{eq:Phi_def}, not non-continuability by itself (indeed along the single ray $u = \ii\tau \to \ii\pi/8$, $w = \ee^{4\ii\tau} \to \ii$ hits a cusp where $\Phi(\ii\tau) \to 0$). Second, although zeros of $G_y(z)$ are harmless for the Cauchy shift \eqref{eq:shifted_I_thm} of the holomorphic integrand $G_y(z)\ee^{2\ii t z}$, every zero $G_y(z_0) = 0$ in $\mathcal{S}_{\pi/4}$ is a \emph{logarithmic branch point} of $\ln G_y(z)$ and a \emph{simple pole} of $\partial_z\ln G_y(z)$, obstructing naive global steepest-descent arguments that treat $\ln G_y(z)$ as holomorphic throughout $\mathcal{S}_{\pi/4}$.
 \end{remark}
 
-\section{High-precision numerical verification and contour tables}\label{sec:numerics}
+\section{Conditional local saddle-point coalescence normal form}\label{sec:coalescence}
 
-All analytical identities and contour estimates in Sections~\ref{sec:wigner}--\ref{sec:saddle} have been independently verified to 50--60 decimal places in Python using \texttt{mpmath} via the self-contained verification script \nolinkurl{verify_paper1_wigner_saddle_coalescence.py}.
+Away from the zero locus $\{z \in \mathcal{S}_{\pi/4} : G_y(z) = 0\}$, $\ln G_y(z)$ is locally holomorphic and complex stationary points of $\Psi_{y,\omega}(z) := \ln G_y(z) + \ii\omega z$ ($\omega = 2t > 0$) satisfy $\partial_z\ln G_y(z) + \ii\omega = 0$. We record the exact local bifurcation normal form under explicit hypotheses.
 
-\subsection{Verification of holomorphic parity, vertical wall decay, and Cauchy box residuals}\label{subsec:num_walls}
-
-At the test point $u = 0.28 + 0.19\ii \in \mathcal{S}_{\pi/8}^{(u)}$, evaluating \eqref{eq:Phi_def} directly with 140 terms (without \texttt{abs(u)}) at 60-decimal working precision yields
-\[
-\Phi(\pm u) = 0.01844877239324626577501967221803 + 0.2032844249819877859061764797027\,\ii,
-\]
-with parity residual $|\Phi(u) - \Phi(-u)| = 2.60591 \times 10^{-61} < 10^{-58}$. At $y = 0.40, \xi = 0.35, \eta = 0.55$, the Hermitian symmetry residual is $|G_y(-\xi+\ii\eta) - \overline{G_y(\xi+\ii\eta)}| = 1.16682 \times 10^{-59}$, and on the imaginary axis $G_y(\ii\eta) = 21.41266708251023754292194$ with $|\Ima G_y(\ii\eta)| = 1.05832 \times 10^{-59}$. Table~\ref{tab:wall_decay} documents the double-exponential decay of $|G_y(L+\ii\eta)|$ across $\eta \in [0,\pi/4)$ and the breakdown at the natural boundary $\eta = \pi/4$. On the closed Cauchy box $[-2.4, 2.4] \times [0, 0.55]$ at $\omega = \gamma_1$ and $y = 0.40$, both the real-axis integral and the shifted contour integral evaluate to $0.0004522492190008685472330323345970528$, with side-wall contribution $1.30091 \times 10^{-196}$ and closed-loop Cauchy residual $|\oint_{\partial\mathcal{R}}| = 3.58732 \times 10^{-43}$.
-
-\begin{table}[htbp]
-\centering
-\caption{Double-exponential decay of the mirror convolution kernel $|G_y(L+\ii\eta)|$ on the vertical Cauchy walls $\xi = \pm L$ ($y = 0.40$) and breakdown at the natural boundary $\eta = \pi/4$.}\label{tab:wall_decay}
-\scriptsize
-\setlength{\tabcolsep}{4.5pt}
-\begin{tabular}{ccccc}
-\toprule
-\textbf{Contour Height $\eta$} & \textbf{Factor $\cos(2\eta)$} & \textbf{$|G_y(L+\ii\eta)|$ ($L=2.0$)} & \textbf{$|G_y(L+\ii\eta)|$ ($L=3.0$)} & \textbf{Wall Status as $L\to\infty$} \\
-\midrule
-$0.000000$ & $1.000000$ & $1.38092 \times 10^{-189}$ & $9.77371 \times 10^{-1459}$ & Closed (decays to $0$) \\
-$0.250000$ & $0.877583$ & $3.42020 \times 10^{-165}$ & $1.69241 \times 10^{-1278}$ & Closed (decays to $0$) \\
-$0.500000$ & $0.540302$ & $5.53601 \times 10^{-98}$  & $6.53404 \times 10^{-782}$  & Closed (decays to $0$) \\
-$0.550000$ & $0.453596$ & $1.04943 \times 10^{-80}$  & $2.98538 \times 10^{-654}$  & Closed (decays to $0$) \\
-$0.650000$ & $0.267499$ & $1.27103 \times 10^{-43}$  & $2.95791 \times 10^{-380}$  & Closed (decays to $0$) \\
-$0.750000$ & $0.070737$ & $2.05308 \times 10^{-4}$   & $1.47351 \times 10^{-90}$   & Closed (decays to $0$) \\
-$\pi/4 \approx 0.785398$ & $0.000000$ & Divergent ($|\ee^{-\ii\dots}|=1$) & Divergent ($|\ee^{-\ii\dots}|=1$) & Natural boundary \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{50-decimal pitchfork saddle trajectory and cancellation collapse}\label{subsec:num_saddles}
-
-Table~\ref{tab:saddle_trajectory} reports the 50-decimal complex saddle points $x_*^\pm(y,\omega_1) = \pm\xi_*(y,\omega_1) + \ii\eta_*(y,\omega_1)$ at the benchmark frequency $\omega_1 = 2\gamma_1 \approx 28.26945028$ across $y \in [0.05, 1.10]$. Solving the simultaneous bifurcation equations $\Ima[\partial_x\ln G_y(\ii\eta_c)] + \omega_1 = 0$ and $\partial_\xi^2\ln G_y(\ii\eta_c) = 0$ yields the 30-digit coalescence coordinates and normal-form coefficients
-\begin{equation}\label{eq:exact_yc_digits}
-\begin{aligned}
-y_c(2\gamma_1) &= 0.432020530305680704381066352456, \\
-\eta_*(y_c, 2\gamma_1) &= 0.602715023857425736790419515415, \\
-\partial_y L_{y_c}'(\eta_c) &= +48.0778425663, \;\; L_{y_c}'''(\eta_c) = -1074.1651338238, \;\; K \approx 0.2991933645.
-\end{aligned}
+\begin{lemma}[Imaginary-axis derivative parity away from $\Phi$-zeros]\label{lem:axis_symmetry}
+Let $y \in \mathbb{R}$ and $\eta \in (-\pi/4,\pi/4)$ satisfy $G_y(\ii\eta) > 0$, and write $L_y(\eta) := \ln G_y(\ii\eta) \in \mathbb{R}$. Then on a neighborhood of $z = \ii\eta$:
+\begin{enumerate}
+\item[\textup{(a)}] Every odd horizontal derivative $\partial_\xi^{2k+1}\ln G_y(\ii\eta)$ is purely imaginary and every even horizontal derivative $\partial_\xi^{2k}\ln G_y(\ii\eta)$ is purely real; in particular,
+\begin{equation}\label{eq:axis_derivs}
+\partial_z\ln G_y(\ii\eta) = -\ii L_y'(\eta), \qquad \partial_z^2\ln G_y(\ii\eta) = \partial_\xi^2\ln G_y(\ii\eta) = -L_y''(\eta), \qquad \partial_z^3\ln G_y(\ii\eta) = \ii L_y'''(\eta).
 \end{equation}
-Because $\Phi(\ii\tau)$ has its first imaginary-axis zero at $\tau_1 \approx 0.31941503$ ($2\tau_1 \approx 0.63883005$), for $0 < y < y_c(2\gamma_1)$ the steepest-descent off-axis saddle transitions across the Stokes line $\xi = y$ from the outer branch ($\xi_* > y$) to the inner reflected and pitchfork branches ($0 < \xi_* < y$), maintaining a strictly negative horizontal Hessian $\Rea[\partial_x^2\ln G_y(x_*^+)] < 0$ at every $y \neq y_c$. For all $y > y_c(2\gamma_1)$, the saddle remains strictly on the imaginary axis ($\xi_* \equiv 0$) with $\partial_\xi^2\ln G_y(\ii\eta_*) < 0$, and its height $\eta_*(y,2\gamma_1)$ closely tracks the inner asymptotic law \eqref{eq:inner_saddle_height} (e.g., at $y=0.90$, exact $\eta_* = 0.18954242$ vs.\ $0.19050502$; at $y=1.10$, exact $\eta_* = 0.12569397$ vs.\ $0.12596012$).
+\item[\textup{(b)}] If $z_* = \xi_* + \ii\eta_*$ ($G_y(z_*) \neq 0$) solves $\partial_z\ln G_y(z_*) + \ii\omega = 0$, then $-\bar{z}_* = -\xi_* + \ii\eta_*$ also solves $\partial_z\ln G_y(-\bar{z}_*) + \ii\omega = 0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $G_y(\ii\eta) > 0$, the real-valued branch $\ln G_y(\ii\eta) = 2\ln|\Phi((y+\ii\eta)/2)|$ extends holomorphically to a disk $D(\ii\eta, r)$ on which $G_y(z) \neq 0$, preserving $\ln G_y(-\xi+\ii\eta) = \overline{\ln G_y(\xi+\ii\eta)}$. Differentiating $m$ times with respect to $\xi$ at $\xi = 0$ gives $(-1)^m\partial_\xi^m\ln G_y(\ii\eta) = \overline{\partial_\xi^m\ln G_y(\ii\eta)}$, proving the reality/imaginarity claim, while holomorphy in $z = \xi + \ii\eta$ ($\partial_z = -\ii\partial_\eta$) yields \eqref{eq:axis_derivs}. Differentiating $\ln G_y(-\bar{z}) = \overline{\ln G_y(z)}$ gives $-\overline{\partial_z\ln G_y(-\bar{z})} = \overline{\partial_z\ln G_y(z)}$, so $\partial_z\ln G_y(z_*) = -\ii\omega$ implies $\partial_z\ln G_y(-\bar{z}_*) = \overline{\ii\omega}\cdot(-1)\cdot(-1) = -\ii\omega$.
+\end{proof}
+
+\begin{proposition}[Local $90^\circ$ Stokes-rotation saddle coalescence normal form]\label{prop:local_pitchfork}
+Fix $\omega > 0$ and assume $(y_c, \eta_c) \in (0,\infty)\times(0,\pi/4)$ satisfies $G_{y_c}(\ii\eta_c) > 0$ together with
+\begin{equation}\label{eq:bif_hypotheses}
+L_{y_c}'(\eta_c) = \omega, \qquad L_{y_c}''(\eta_c) = 0, \qquad \alpha := \partial_y L_{y_c}'(\eta_c) > 0, \qquad \beta := -L_{y_c}'''(\eta_c) > 0.
+\end{equation}
+Then there exist $\delta_y > 0$ and $\delta_z > 0$ such that for $|y - y_c| < \delta_y$, the solutions of $\partial_z\ln G_y(z) + \ii\omega = 0$ in $|z - \ii\eta_c| < \delta_z$ consist of two roots colliding quadratically at $\ii\eta_c$:
+\begin{enumerate}
+\item[\textup{(i)}] for $y_c - \delta_y < y < y_c$, a symmetric horizontal off-axis pair $z_*^\pm(y,\omega) = \pm\xi_*(y,\omega) + \ii\eta_*(y,\omega)$ satisfying
+\begin{equation}\label{eq:boxed_pitchfork}
+\boxed{\;
+\big(z_*^\pm(y,\omega) - \ii\eta_c\big)^2 = K^2(y_c - y) + \mathcal{O}\!\left(|y - y_c|^{3/2}\right), \qquad K := \sqrt{\frac{2\,\partial_y L_{y_c}'(\eta_c)}{-L_{y_c}'''(\eta_c)}} > 0,
+\;}
+\end{equation}
+so $\xi_*(y,\omega) = K\sqrt{y_c - y} + \mathcal{O}(|y-y_c|) > 0$ and $\eta_*(y,\omega) = \eta_c + \mathcal{O}(|y-y_c|)$;
+\item[\textup{(ii)}] for $y_c < y < y_c + \delta_y$, two purely imaginary roots $z_*^\pm(y,\omega) = \ii\eta_\pm(y,\omega)$ with $\eta_\pm(y,\omega) = \eta_c \pm K\sqrt{y - y_c} + \mathcal{O}(|y-y_c|)$, of which the lower branch $\eta_*(y,\omega) := \eta_-(y,\omega) < \eta_c$ carries strictly negative horizontal Hessian $\partial_\xi^2\ln G_y(\ii\eta_*) = -\sqrt{2\alpha\beta(y - y_c)} + \mathcal{O}(|y-y_c|) < 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Since $G_{y_c}(\ii\eta_c) > 0$, $(y,z) \mapsto F(y,z) := \partial_z\ln G_y(z) + \ii\omega$ is holomorphic on a bidisk $\{|y-y_c| < r_1\} \times \{|z - \ii\eta_c| < r_2\}$. Setting $\Delta z := z - \ii\eta_c = \xi + \ii\Delta\eta$ and $\Delta y := y - y_c$, Lemma~\ref{lem:axis_symmetry}(a) and \eqref{eq:bif_hypotheses} yield the Taylor expansion
+\[
+F(y,z) = -\ii\alpha\,\Delta y - \frac{\ii\beta}{2}(\Delta z)^2 + c_{11}\,\Delta y\,\Delta z + c_{03}(\Delta z)^3 + \mathcal{O}\!\left(|\Delta y|^2 + |\Delta y||\Delta z|^2 + |\Delta z|^4\right).
+\]
+By the Weierstrass preparation theorem for the double root $\Delta z = 0$ at $\Delta y = 0$, $F(y,z) = U(y,z)\big[(\Delta z)^2 + a_1(\Delta y)\Delta z + a_0(\Delta y)\big]$ on a smaller bidisk, where $U(y_c,\ii\eta_c) = -\ii\beta/2 \neq 0$. The reflection symmetry $F(y,-\bar{z}) = -\overline{F(y,z)}$ forces the unique monic Weierstrass polynomial $P(\Delta y, \Delta z)$ to satisfy $\overline{P(\Delta y, -\overline{\Delta z})} = P(\Delta y, \Delta z)$, whence $a_1(\Delta y) \in \ii\mathbb{R}$ with $a_1(\Delta y) = \mathcal{O}(|\Delta y|)$ and $a_0(\Delta y) \in \mathbb{R}$ with $a_0(\Delta y) = \frac{2\alpha}{\beta}\Delta y + \mathcal{O}(|\Delta y|^2) = -K^2(y_c - y) + \mathcal{O}(|\Delta y|^2)$. Solving $(\Delta z + \frac{1}{2}a_1(\Delta y))^2 = \frac{1}{4}a_1(\Delta y)^2 - a_0(\Delta y) = K^2(y_c - y) + \mathcal{O}(|\Delta y|^2)$ gives the conjugate-reflected off-axis pair \eqref{eq:boxed_pitchfork} for $y < y_c$ (since $-\frac{1}{2}a_1(\Delta y) \in \ii\mathbb{R}$) and two purely imaginary roots $\Delta z = -\frac{1}{2}a_1(\Delta y) \pm \ii K\sqrt{y - y_c} + \mathcal{O}(|y-y_c|) \in \ii\mathbb{R}$ for $y > y_c$. Evaluating $\partial_z F(y,z) = -\ii\beta\,\Delta z + \mathcal{O}(|\Delta y| + |\Delta z|^2)$ at the lower imaginary root $\Delta z = -\ii K\sqrt{y - y_c} + \mathcal{O}(|y-y_c|)$ gives $\partial_\xi^2\ln G_y(\ii\eta_*) = -\beta K\sqrt{y - y_c} + \mathcal{O}(|y-y_c|) = -\sqrt{2\alpha\beta(y - y_c)} + \mathcal{O}(|y-y_c|) < 0$.
+\end{proof}
+
+\begin{remark}[Local theorem versus global numerical observation]\label{rem:local_vs_global}
+Proposition~\ref{prop:local_pitchfork} is strictly \emph{local} near $(y_c, \ii\eta_c)$: as shown in the proof, the quadratic normal form $(\Delta z)^2 \approx K^2(y_c - y)$ is actually a complex saddle-node / $90^\circ$ Stokes-rotation coalescence in which two horizontal off-axis saddles ($\pm\xi_* + \ii\eta_*$ for $y < y_c$) collide at $\ii\eta_c$ and separate vertically along the imaginary axis into two purely imaginary saddles ($\ii\eta_\pm$ for $y > y_c$, of which the lower branch $\eta_* = \eta_- < \eta_c$ has negative horizontal Hessian $\partial_\xi^2\ln G_y(\ii\eta_*) < 0$). Global behavior across $y \in [0.05, 1.10]$ at $\omega = 2\gamma_1$ is documented as a numerical homotopy observation in Section~\ref{sec:numerics}, not claimed as an unconditional global theorem for all $\omega > 0$.
+\end{remark}
+
+\section{High-precision verification and quadrature conditioning}\label{sec:numerics}
+
+All computations are reproduced by the standalone verification script \nolinkurl{scripts/verify_paper1_wigner_saddle_coalescence.py} using \texttt{mpmath} at $50$--$60$ decimal places.
+
+\subsection{Cauchy wall decay and closed-loop verification}
+
+At $y = 0.40$, $z = 0.35 + 0.55\ii$, and $u = 0.28 + 0.19\ii$, \texttt{mpmath} ($60$ dps) confirms $|\Phi(u)-\Phi(-u)| = 2.61 \times 10^{-61}$ and $|G_y(-\xi+\ii\eta) - \overline{G_y(\xi+\ii\eta)}| = 1.17 \times 10^{-59}$. Table~\ref{tab:wall_decay} shows the vertical wall decay \eqref{eq:wall_bound} up to the strip boundary $\eta = \pi/4$. On $[-2.4, 2.4] \times [0, 0.55]$ at $\omega = \gamma_1$, the closed Cauchy contour residual is $3.59 \times 10^{-43}$.
 
 \begin{table}[htbp]
 \centering
-\caption{Complex steepest-descent saddle trajectory $x_*^\pm(y, 2\gamma_1) = \pm\xi_*(y,2\gamma_1) + \ii\eta_*(y,2\gamma_1)$ and horizontal Hessian $\Rea[\partial_x^2 \ln G_y(x_*^+)]$ across the pitchfork bifurcation at $y_c(2\gamma_1) \approx 0.43202053$.}\label{tab:saddle_trajectory}
-\scriptsize
-\setlength{\tabcolsep}{2.1pt}
-\begin{tabular}{ccccl}
+\caption{Vertical Cauchy wall magnitude $|G_y(L+\ii\eta)|$ ($y = 0.40$, $60$-decimal \texttt{mpmath}) versus contour height $\eta \in [0, \pi/4]$.}\label{tab:wall_decay}
+\footnotesize
+\begin{tabular}{rrrrl}
 \toprule
-\textbf{Shift $y$} & \textbf{Right Saddle $x_*^+ = +\xi_* + \ii\eta_*$} & \textbf{Left Saddle $x_*^- = -\xi_* + \ii\eta_*$} & \textbf{Hessian $\Rea\partial_x^2\ln G_y$} & \textbf{Saddle Regime} \\
+\textbf{Height $\eta$} & $\cos(2\eta)$ & $|G_y(2.0 + \ii\eta)|$ & $|G_y(3.0 + \ii\eta)|$ & \textbf{Series / Wall Regime} \\
 \midrule
-$0.050000$ & $+0.40418674 + 0.61381428\ii$ & $-0.40418674 + 0.61381428\ii$ & $-4.54229932 \times 10^{1}$ & Outer off-axis ($\xi_* > y$) \\
-$0.100000$ & $+0.41411144 + 0.60599972\ii$ & $-0.41411144 + 0.60599972\ii$ & $-3.22653864 \times 10^{1}$ & Outer off-axis ($\xi_* > y$) \\
-$0.200000$ & $+0.33379542 + 0.58444323\ii$ & $-0.33379542 + 0.58444323\ii$ & $-8.54838506 \times 10^{1}$ & Outer off-axis ($\xi_* > y$) \\
-$0.300000$ & $+0.13969227 + 0.62533792\ii$ & $-0.13969227 + 0.62533792\ii$ & $-7.55807305 \times 10^{1}$ & Inner off-axis ($0 < \xi_* < y$) \\
-$0.350000$ & $+0.15981952 + 0.60988092\ii$ & $-0.15981952 + 0.60988092\ii$ & $-5.93841563 \times 10^{1}$ & Inner off-axis ($0 < \xi_* < y$) \\
-$0.400000$ & $+0.03097628 + 0.63405509\ii$ & $-0.03097628 + 0.63405509\ii$ & $-2.28083509 \times 10^{1}$ & Pitchfork off-axis \\
-$0.420000$ & $+0.02826368 + 0.61080112\ii$ & $-0.02826368 + 0.61080112\ii$ & $-1.39099980 \times 10^{1}$ & Pitchfork off-axis \\
-$0.432021$ & $+0.00000000 + 0.60271502\ii$ & $+0.00000000 + 0.60271502\ii$ & $+9.95682444 \times 10^{-59}$ & Pitchfork bifurcation $y_c$ \\
-$0.450000$ & $+0.00000000 + 0.54821071\ii$ & $+0.00000000 + 0.54821071\ii$ & $-2.67260091 \times 10^{1}$ & Coalesced ($\xi_* = 0$) \\
-$0.500000$ & $+0.00000000 + 0.46989397\ii$ & $+0.00000000 + 0.46989397\ii$ & $-4.08129949 \times 10^{1}$ & Coalesced ($\xi_* = 0$) \\
-$0.600000$ & $+0.00000000 + 0.36453529\ii$ & $+0.00000000 + 0.36453529\ii$ & $-6.30701027 \times 10^{1}$ & Coalesced ($\xi_* = 0$) \\
-$0.750000$ & $+0.00000000 + 0.26030095\ii$ & $+0.00000000 + 0.26030095\ii$ & $-9.85437766 \times 10^{1}$ & Coalesced ($\xi_* = 0$) \\
-$0.900000$ & $+0.00000000 + 0.18954242\ii$ & $+0.00000000 + 0.18954242\ii$ & $-1.41913558 \times 10^{2}$ & Coalesced ($\xi_* = 0$) \\
-$1.100000$ & $+0.00000000 + 0.12569397\ii$ & $+0.00000000 + 0.12569397\ii$ & $-2.20145746 \times 10^{2}$ & Coalesced ($\xi_* = 0$) \\
+$0.000000$ & $1.000000$ & $1.38092 \times 10^{-189}$ & $9.77371 \times 10^{-1459}$ & Convergent (decays) \\
+$0.250000$ & $0.877583$ & $3.42020 \times 10^{-165}$ & $1.69241 \times 10^{-1278}$ & Convergent (decays) \\
+$0.500000$ & $0.540302$ & $5.53601 \times 10^{-98}$  & $6.53404 \times 10^{-782}$  & Convergent (decays) \\
+$0.550000$ & $0.453596$ & $1.04943 \times 10^{-80}$  & $2.98538 \times 10^{-654}$  & Convergent (decays) \\
+$0.650000$ & $0.267499$ & $1.27103 \times 10^{-43}$  & $2.95791 \times 10^{-380}$  & Convergent (decays) \\
+$0.750000$ & $0.070737$ & $2.05308 \times 10^{-4}$   & $1.47351 \times 10^{-90}$   & Convergent (decays) \\
+$\pi/4 \approx 0.785398$ & $0.000000$ & Series diverges & Series diverges & Strip boundary ($\cos 2\eta = 0$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:cancellation_collapse} and Figure~\ref{fig:saddle_coalescence} illustrate the quantitative elimination of real-axis cancellation when the horizontal contour $\xi \mapsto \xi + \ii\eta$ is lifted from $\eta = 0$ to $\eta \in (0,\pi/4)$. In Case A ($\omega = 2\gamma_1, y = 0.40$), the net integral $I(y,t) = 1.76903968 \times 10^{-6}$ is preserved across all $\eta$, while the destructive cancellation drops from $99.7697\%$ at $\eta = 0$ ($I_+ / |I_-| = 1.0023$) to $0.0392\%$ at $\eta = 0.50$ ($I_+ / |I_-| = 2547.95$). In Case B ($\omega = \gamma_1, y = 0.40$, inside the coalesced single-saddle regime), lifting to $\eta = 0.18$ increases the lobe dominance ratio to $I_+ / |I_-| = 1.547 \times 10^{11}$. Finally, Table~\ref{tab:karlin_zeros} and Figure~\ref{fig:cauchy_and_karlin} verify the zero-marginal law \eqref{eq:zero_marginal} and the strict positivity of the Karlin-weighted Wronskian $W(d=0.20, \gamma_k) > 0$ across the first five non-trivial zeros $\gamma_1, \dots, \gamma_5$.
+\subsection{Numerical saddle-branch tracking at $\omega = 2\gamma_1$}
+
+At $\omega_1 = 2\gamma_1 \approx 28.2694502835$, solving $L_y'(\eta) = \omega_1$ and $L_y''(\eta) = 0$ simultaneously yields
+\[
+y_c(\omega_1) = 0.43202053030568070438\dots, \qquad \eta_c(\omega_1) = 0.60271502385742573679\dots,
+\]
+where $G_{y_c}(\ii\eta_c) \approx 82.3717 > 0$, $\partial_y L_{y_c}'(\eta_c) \approx +48.0778 > 0$, $L_{y_c}'''(\eta_c) \approx -1074.1651 < 0$, and $K \approx 0.29919336$, verifying all hypotheses of Proposition~\ref{prop:local_pitchfork} at $\omega_1$. Table~\ref{tab:saddle_trajectory} lists the numerically tracked branch across $y \in [0.05, 1.10]$.
 
 \begin{table}[htbp]
 \centering
-\caption{Elimination of real-axis Fourier cancellation along shifted horizontal contours $x = \xi + \ii\eta$ ($y = 0.40$) in the two-saddle regime ($\omega = 2\gamma_1$, top) and single-saddle coalesced regime ($\omega = \gamma_1$, bottom).}\label{tab:cancellation_collapse}
-\scriptsize
-\setlength{\tabcolsep}{1.8pt}
-\begin{tabular}{cccccccc}
+\caption{$50$-decimal tracked stationary-point branch $z_*^\pm(y, 2\gamma_1) = \pm\xi_* + \ii\eta_*$ across $y \in [0.05, 1.10]$ (residuals $< 10^{-45}$).}\label{tab:saddle_trajectory}
+\footnotesize
+\begin{tabular}{rrrl}
 \toprule
-\textbf{Regime / $\eta$} & \textbf{$\ee^{-\omega\eta}$} & \textbf{Pos.\ Lobe $I_+$} & \textbf{Neg.\ Lobe $I_-$} & \textbf{Net $I(y,\omega)$} & \textbf{$I_+ / |I_-|$} & \textbf{Cancel.} & \textbf{Net Share} \\
+\textbf{Shift $y$} & \textbf{Right Saddle $+\xi_* + \ii\eta_*$} & \textbf{Hessian $\Rea\partial_z^2\ln G_y(z_*^+)$} & \textbf{Tracked Regime} \\
 \midrule
-$\omega=2\gamma_1, \eta=0.00$ & $1.000 \times 10^{0}$  & $7.68295 \times 10^{-4}$ & $-7.66526 \times 10^{-4}$ & $1.7690397 \times 10^{-6}$ & $1.0023$    & $99.7697\%$ & $0.2303\%$ \\
-$\omega=2\gamma_1, \eta=0.20$ & $3.504 \times 10^{-3}$ & $9.82897 \times 10^{-6}$ & $-8.05993 \times 10^{-6}$ & $1.7690397 \times 10^{-6}$ & $1.2195$    & $82.0018\%$ & $17.9982\%$ \\
-$\omega=2\gamma_1, \eta=0.40$ & $1.228 \times 10^{-5}$ & $1.84917 \times 10^{-6}$ & $-8.01274 \times 10^{-8}$ & $1.7690397 \times 10^{-6}$ & $23.0778$   & $4.3332\%$  & $95.6668\%$ \\
-$\omega=2\gamma_1, \eta=0.50$ & $7.267 \times 10^{-7}$ & $1.76973 \times 10^{-6}$ & $-6.94571 \times 10^{-10}$ & $1.7690397 \times 10^{-6}$ & $2547.9547$ & $0.0392\%$  & $99.9608\%$ \\
-$\omega=2\gamma_1, \eta=0.55$ & $1.768 \times 10^{-7}$ & $1.77470 \times 10^{-6}$ & $-5.65720 \times 10^{-9}$ & $1.7690397 \times 10^{-6}$ & $313.7061$  & $0.3188\%$  & $99.6812\%$ \\
-\midrule
-$\omega=\gamma_1, \eta=0.00$  & $1.000 \times 10^{0}$  & $9.93910 \times 10^{-4}$ & $-5.41661 \times 10^{-4}$ & $4.5224922 \times 10^{-4}$ & $1.8349$    & $54.4980\%$ & $45.5020\%$ \\
-$\omega=\gamma_1, \eta=0.10$  & $2.433 \times 10^{-1}$ & $4.93329 \times 10^{-4}$ & $-4.10793 \times 10^{-5}$ & $4.5224922 \times 10^{-4}$ & $12.0092$   & $8.3270\%$  & $91.6730\%$ \\
-$\omega=\gamma_1, \eta=0.18$  & $7.853 \times 10^{-2}$ & $4.52249 \times 10^{-4}$ & $-2.92377 \times 10^{-15}$ & $4.5224922 \times 10^{-4}$ & $1.547 \times 10^{11}$ & $0.0000\%$ & $100.0000\%$ \\
-$\omega=\gamma_1, \eta=0.20$  & $5.919 \times 10^{-2}$ & $4.52249 \times 10^{-4}$ & $-9.25674 \times 10^{-13}$ & $4.5224922 \times 10^{-4}$ & $4.886 \times 10^{8}$  & $0.0000\%$ & $100.0000\%$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Verification of the Hudson zero-marginal identity $\int_0^\infty I(y,\gamma_k)\,\dd y = 0$, the sign-change threshold $y_0(\gamma_k)$, and the Karlin-weighted Wronskian $W(d=0.20, \gamma_k) > 0$ across the first five Riemann zeros.}\label{tab:karlin_zeros}
-\scriptsize
-\setlength{\tabcolsep}{1.9pt}
-\begin{tabular}{cccccc}
-\toprule
-\textbf{Zero $\gamma_k$} & \textbf{Height $t = \gamma_k$} & \textbf{Crossing $y_0(\gamma_k)$} & \textbf{Marginal $\int_0^\infty I(y,\gamma_k)\,\dd y$} & \textbf{Wronskian $W(0.20, \gamma_k)$} & \textbf{Positivity Status} \\
-\midrule
-$\gamma_1$ & $14.134725$ & $0.2266$ & $+2.613245 \times 10^{-9}$  & $+1.922283 \times 10^{-7}$  & Strictly positive ($W > 0$) \\
-$\gamma_2$ & $21.022040$ & $0.4612$ & $+1.175760 \times 10^{-13}$ & $+3.185662 \times 10^{-11}$ & Strictly positive ($W > 0$) \\
-$\gamma_3$ & $25.010858$ & $0.5695$ & $+2.732216 \times 10^{-16}$ & $+1.621950 \times 10^{-13}$ & Strictly positive ($W > 0$) \\
-$\gamma_4$ & $30.424876$ & $0.6823$ & $-7.897551 \times 10^{-20}$ & $+5.946354 \times 10^{-17}$ & Strictly positive ($W > 0$) \\
-$\gamma_5$ & $32.935062$ & $0.7274$ & $+1.076575 \times 10^{-20}$ & $+1.711849 \times 10^{-18}$ & Strictly positive ($W > 0$) \\
+$0.050000$ & $+0.40418674 + 0.61381428\ii$ & $-4.54229932 \times 10^{1}$ & Off-axis ($\xi_* > y$) \\
+$0.100000$ & $+0.41411144 + 0.60599972\ii$ & $-3.22653864 \times 10^{1}$ & Off-axis ($\xi_* > y$) \\
+$0.200000$ & $+0.33379542 + 0.58444323\ii$ & $-8.54838506 \times 10^{1}$ & Off-axis ($\xi_* > y$) \\
+$0.300000$ & $+0.13969227 + 0.62533792\ii$ & $-7.55807305 \times 10^{1}$ & Off-axis ($0 < \xi_* < y$) \\
+$0.350000$ & $+0.15981952 + 0.60988092\ii$ & $-5.93841563 \times 10^{1}$ & Off-axis ($0 < \xi_* < y$) \\
+$0.400000$ & $+0.03097628 + 0.63405509\ii$ & $-2.28083509 \times 10^{1}$ & Near-axis off-axis \\
+$0.420000$ & $+0.02826368 + 0.61080112\ii$ & $-1.39099980 \times 10^{1}$ & Near-axis off-axis \\
+$0.432021$ & $+0.00000000 + 0.60271502\ii$ & $0$ ($-1.03 \times 10^{-48}$) & Local coalescence $y_c(2\gamma_1)$ \\
+$0.450000$ & $+0.00000000 + 0.54821071\ii$ & $-2.67260091 \times 10^{1}$ & Lower on-axis branch ($\xi_* = 0$) \\
+$0.500000$ & $+0.00000000 + 0.46989397\ii$ & $-4.08129949 \times 10^{1}$ & Lower on-axis branch ($\xi_* = 0$) \\
+$0.600000$ & $+0.00000000 + 0.36453529\ii$ & $-6.30701027 \times 10^{1}$ & Lower on-axis branch ($\xi_* = 0$) \\
+$0.750000$ & $+0.00000000 + 0.26030095\ii$ & $-9.85437766 \times 10^{1}$ & Lower on-axis branch ($\xi_* = 0$) \\
+$0.900000$ & $+0.00000000 + 0.18954242\ii$ & $-1.41913558 \times 10^{2}$ & Lower on-axis branch ($\xi_* = 0$) \\
+$1.100000$ & $+0.00000000 + 0.12569397\ii$ & $-2.20145746 \times 10^{2}$ & Lower on-axis branch ($\xi_* = 0$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -483,100 +350,137 @@ $\gamma_5$ & $32.935062$ & $0.7274$ & $+1.076575 \times 10^{-20}$ & $+1.711849 \
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth]{figures/fig1_wigner_saddle_coalescence.pdf}
-\caption{(a) Comparison of the normalized integrand profile $\Rea[G_y(\xi+\ii\eta)\ee^{\ii\omega(\xi+\ii\eta)}]$ on the real axis $\eta = 0$ ($99.77\%$ cancellation) versus the shifted complex contour $\eta = 0.50$ ($99.96\%$ net positive retention) at $y = 0.40, \omega = 2\gamma_1$. (b) Pitchfork saddle-point coalescence of the conjugate branches $\pm\xi_*(y,2\gamma_1)$ onto the imaginary axis $\xi_* = 0$ at $y_c(2\gamma_1) \approx 0.4320$, with saddle height $\eta_*(y,2\gamma_1) < \pi/4$.}\label{fig:saddle_coalescence}
+\caption{\textbf{(a)} Peak-normalized integrand $\Rea[G_y(\xi+\ii\eta)\ee^{\ii\omega(\xi+\ii\eta)}]$ at $y = 0.40$, $\omega = 2\gamma_1$: the net integral $I(y,\gamma_1) = 1.76903968\times 10^{-6}$ is contour-invariant, while shifting from $\eta = 0$ to $\eta = 0.50$ lowers the $L^1$ quadrature condition number $\kappa_{\mathrm{quad}}$ from $867.6$ to $1.0008$. \textbf{(b)} Numerically tracked stationary-point branch $(\pm\xi_*,\eta_*)$ at $\omega = 2\gamma_1$ alongside the strip $\Phi$-zero heights $2\tau_0 \approx 0.6388$ and $2\Ima(u_1) \approx 0.6955$.}\label{fig:saddle_coalescence}
 \end{figure}
+
+\subsection{Quadrature conditioning and canonical normalization verification}
+
+At $y = 0.40$ and $\omega = 2\gamma_1$, the net integral $I(0.40,\gamma_1) = +1.76903968 \times 10^{-6}$ is invariant across $\eta \in [0, 0.60]$. Shifting from $\eta = 0$ (where $I_+ = +7.6829 \times 10^{-4}$, $I_- = -7.6653 \times 10^{-4}$, and $\kappa_{\mathrm{quad}} = 867.60$) to $\eta = 0.50$ (where $I_+ = +1.7697 \times 10^{-6}$, $I_- = -6.9457 \times 10^{-10}$, and $\kappa_{\mathrm{quad}} = 1.0008$) strongly improves numerical quadrature conditioning. Table~\ref{tab:zeros_lever} verifies both $\int_0^\infty I(y,\gamma_k)\,\dd y = 0$ and the canonical prefactor $16$ in \eqref{eq:W_mirror_thm} against direct Cauchy--Riemann evaluation $W_{\mathrm{CR}}(0.20, \gamma_k)$ to $54$--$58$ decimals across $\gamma_1, \dots, \gamma_5$.
+
+\begin{table}[htbp]
+\centering
+\caption{$50$-decimal verification of the zero-marginal identity $\int_0^\infty I(y,\gamma_k)\,\dd y = 0$, canonical Wronskian normalization $W_{\mathrm{Wig}}(0.20,\gamma_k) = 16\int_0^\infty y\sinh(0.40 y)I(y,\gamma_k)\,\dd y$ versus exact $W_{\mathrm{CR}}(0.20,\gamma_k)$, and sign-change count of $I(y,\gamma_k)$ on $[0, 1.35]$.}\label{tab:zeros_lever}
+\scriptsize
+\setlength{\tabcolsep}{4.2pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Zero} & $\gamma_k$ & $\int_0^\infty I(y,\gamma_k)\,\dd y$ & $W_{\mathrm{Wig}}(0.20,\gamma_k)$ & $W_{\mathrm{CR}}(0.20,\gamma_k)$ & $|W_{\mathrm{Wig}}-W_{\mathrm{CR}}|$ & \textbf{Crossings} \\
+\midrule
+$\gamma_1$ & $14.134725$ & $-3.68 \times 10^{-54}$ & $+3.8445657091 \times 10^{-7}$  & $+3.8445657091 \times 10^{-7}$  & $7.07 \times 10^{-55}$ & $1$ \\
+$\gamma_2$ & $21.022040$ & $+9.22 \times 10^{-55}$ & $+6.3713228683 \times 10^{-11}$ & $+6.3713228683 \times 10^{-11}$ & $9.85 \times 10^{-58}$ & $1$ \\
+$\gamma_3$ & $25.010858$ & $+1.07 \times 10^{-54}$ & $+3.2438994312 \times 10^{-13}$ & $+3.2438994312 \times 10^{-13}$ & $2.09 \times 10^{-55}$ & $5$ \\
+$\gamma_4$ & $30.424876$ & $-1.54 \times 10^{-53}$ & $+1.1892708589 \times 10^{-16}$ & $+1.1892708589 \times 10^{-16}$ & $2.15 \times 10^{-54}$ & $6$ \\
+$\gamma_5$ & $32.935062$ & $-1.32 \times 10^{-54}$ & $+3.4236969843 \times 10^{-18}$ & $+3.4236969843 \times 10^{-18}$ & $2.45 \times 10^{-55}$ & $7$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth]{figures/fig2_cauchy_contour_and_karlin_lever.pdf}
-\caption{(a) Double-exponential decay of $\log_{10}|G_y(L+\ii\eta)|$ on the vertical Cauchy walls $\xi = \pm 1.5, \pm 2.0, \pm 2.5$ across $\eta \in [0,\pi/4)$ and convergence to the natural boundary at $\eta = \pi/4$. (b) Unweighted Wigner correlation kernel $I(y,\gamma_1)$ satisfying the zero-marginal identity $\int_0^\infty I(y,\gamma_1)\,\dd y = 0$ versus the hyperbolic moment-weighted density $y^2\frac{\sinh(2d y)}{2d y}I(y,\gamma_1)$ ($d = 0.20$), which amplifies the positive coalesced tail $y > y_0 \approx 0.2266$.}\label{fig:cauchy_and_karlin}
+\caption{\textbf{(a)} Double-exponential decay $\log_{10}|G_y(L+\ii\eta)|$ on vertical walls $\xi = \pm L$ ($y = 0.40$) up to the series strip boundary $\eta = \pi/4$. \textbf{(b)} Unweighted zero-marginal profile $I(y,\gamma_1)$ versus the canonical weighted integrand $16 y\sinh(2d y)I(y,\gamma_1)$ at $d = 0.20$.}\label{fig:wall_and_lever}
 \end{figure}
 
-\section{Scope, boundary conditions, and open questions}\label{sec:scope}
+\section{Scope, limitations, and explicit obstructions}\label{sec:scope}
 
-In keeping with strict mathematical transparency, we distinguish clearly between the unconditional analytical identities established in Theorems~\ref{thm:main} and \ref{thm:pitchfork_exact} and the asymptotic boundary questions that arise as $t \to \infty$:
-
+To delineate strictly what the phase-space and contour formalism can and cannot establish, we record four explicit obstructions:
 \begin{enumerate}
-\item \textbf{Asymptotic approach to the natural boundary $\eta \to (\pi/4)^-$ as $\omega \to \infty$:}
-By \eqref{eq:outer_saddle}, the outer saddle height satisfies $\eta_*^{\mathrm{out}}(\omega) = \frac{\pi}{4} - \frac{1}{2}\arctan(\frac{9}{\omega}) = \frac{\pi}{4} - \frac{9}{2\omega} + \mathcal{O}(\omega^{-3})$ as $\omega \to \infty$. Consequently, although $\eta_*(\omega) < \pi/4$ holds strictly for every finite $\omega > 0$, the gap $\frac{\pi}{4} - \eta_*(\omega) \sim \frac{9}{2\omega}$ narrows inversely with $\omega$, so that $\cos(2\eta_*(\omega)) = \frac{9}{\sqrt{\omega^2+81}} \sim \frac{9}{\omega}$. On the vertical Cauchy walls $\xi = \pm L$, the exponent $2\pi\cosh(2y)\ee^{2L}\cos(2\eta_*) \sim \frac{18\pi}{\omega}\cosh(2y)\ee^{2L}$ still diverges double-exponentially as $L \to \infty$ for any fixed $\omega$, but uniform control as $\omega \to \infty$ requires taking $L(\omega) \ge \frac{1}{2}\ln\omega + C$ and accounting for the higher Jacobi modes $n \le N(t) = \lfloor\sqrt{t/(2\pi)}\rfloor$.
-\item \textbf{Two-saddle interference inside the finite Riemann--Siegel window $|y| < y_c(\omega)$:}
-While Theorem~\ref{thm:pitchfork_exact} proves that the saddle points coalesce onto $\xi_* = 0$ for all $|y| \ge y_c(\omega) \sim \frac{1}{2}\ln(\frac{\omega}{4\pi})$, the finite pre-coalescence interval $|y| < y_c(\omega)$ corresponds precisely to the classical Riemann--Siegel window $n \le \sqrt{t/(2\pi)}$, where $I(y,t)$ oscillates due to the interference of $x_*^+$ and $x_*^-$. For individual zeros $\gamma_k$ where $I(y,\gamma_k)$ changes sign once at $y_0(\gamma_k)$ (as verified for $\gamma_1, \dots, \gamma_5$ in Table~\ref{tab:karlin_zeros}), Proposition~\ref{prop:hudson_karlin}(b) guarantees $W(d,\gamma_k) > 0$. Establishing uniform pointwise dominance of the hyperbolic moment integral over the multi-mode interference in $|y| < y_c(t)$ for arbitrarily large $t \to \infty$ (particularly near extreme Lehmer pairs \cite{Lehmer1956,Griffin2019}) remains a deep analytical question that motivates the companion studies on parity-reduced 2D Lipschitz certification, harmonic Chladni nodal chambers, and the affine wavelet decomposition of $\Phi(u)$.
+\item \textbf{Contour invariance versus sign proof:} By Cauchy's theorem, \eqref{eq:shifted_I_thm} equals $I(y,t)$ identically for every $\eta \in (0,\pi/4)$. Shifting $\eta$ reduces the $L^1$ norm of the integrand (conditioning numerical quadrature), but cannot turn a negative integral positive; indeed, $I(y,\gamma_1) < 0$ for $y \in (0, 0.2269)$, where shifted contours simply exhibit negative dominant lobes.
+\item \textbf{Zeros of $\Phi(u)$ and steepest-descent topology inside $\mathcal{S}_{\pi/4}$:} Because $\Phi(\ii\tau_0) = 0$ at $\tau_0 \approx 0.319415 < \pi/8$ and $\Phi(u_1) = 0$ at $u_1 \approx 0.127824 + 0.347770\ii$ ($2\tau_0 \approx 0.638830$ and $2\Ima u_1 \approx 0.695540$, both inside $\mathcal{S}_{\pi/4}$), $G_y(z)$ has zeros inside $\mathcal{S}_{\pi/4}$ creating logarithmic branch points in $\ln G_y(z)$ above $\eta_c(2\gamma_1) \approx 0.602715$ (which the tracked saddle height approaches for small $y$ and large $\omega$). While horizontal contours $z = \xi + \ii\eta$ remain valid throughout $|\eta| < \pi/4$ by holomorphy of $G_y(z)$, any global steepest-descent deformation for $\exp(\ln G_y(z) + \ii\omega z)$ across $\mathcal{S}_{\pi/4}$ must account for Stokes lines around logarithmic sinks $G_y(z_0)=0$.
+\item \textbf{Multi-crossing oscillations as $t$ grows:} For $k \ge 3$, $I(y,\gamma_k)$ changes sign multiple times (Table~\ref{tab:zeros_lever}), so Karlin's single-crossing sign variation lemma does not yield $W(d,\gamma_k) > 0$.
+\item \textbf{Davenport--Heilbronn and backward heat-flow obstruction:} Every identity in Proposition~\ref{prop:mirror_wigner} uses only real-evenness and rapid decay of $\Phi(u)$, never the Euler product of $\zeta(s)$. If $\Phi$ is replaced by $\Phi_\lambda(u) = \ee^{\lambda u^2}\Phi(u)$ with $\lambda < 0$ (backward de Bruijn--Newman flow $H_\lambda$ \cite{DeBruijn1950,Newman1976,CsordasNorfolkVarga1986}) or by the kernel of the Davenport--Heilbronn function \cite{DavenportHeilbronn1936,Titchmarsh1986}, then $W_\lambda(d,t) = 16\int_0^\infty y\sinh(2d y)I_\lambda(y,t)\,\dd y$ has the \emph{exact same} Wigner--$\sinh(2dy)$ form, yet $H_\lambda$ ($\lambda < 0$) and Davenport--Heilbronn possess infinitely many off-critical zeros where $W < 0$ nearby. Hence phase-space and saddle analysis of $\Phi$ alone cannot exclude off-critical zeros without arithmetic input distinguishing $\zeta(s)$ from non-Euler-product Dirichlet series.
 \end{enumerate}
 
 \appendix
 
-\section{Explicit kernel derivatives and Gaussian series tail bounds}\label{app:derivatives}
+\section{Heuristic single-mode $n=1$ saddle scales}\label{app:n1_scales}
 
-For completeness and reproducibility of the Newton--Raphson saddle-point solver in Section~\ref{sec:numerics}, we record the exact closed-form derivatives $\Phi'(u)$ and $\Phi''(u)$ and the explicit tail bound for the truncated series $\Phi_N(u) := \sum_{n=1}^N \phi_n(u)$ in the holomorphic strip $\mathcal{S}_{\pi/8}^{(u)}$.
+Retaining only the $n=1$ term $\phi_1(u) \approx 2\pi^2\ee^{9u}\exp(-\pi\ee^{4u})$ for $u$ with large positive real part gives two heuristic comparison scales used in Figure~\ref{fig:saddle_coalescence}(b):
+\begin{enumerate}
+\item For $\xi > y \ge 0$, $\partial_z\ln G_y^{(1)}(z) \approx 9 - 4\pi\cosh(2y)\ee^{2z}$, so $\partial_z\ln G_y^{(1)}(z) + \ii\omega = 0$ yields $\ee^{2z_*} = \frac{9 + \ii\omega}{4\pi\cosh(2y)}$, giving $\eta_*^{\mathrm{out}}(\omega) = \frac{1}{2}\arctan(\omega/9)$ ($\approx 0.631289 < \pi/4$ at $\omega = 2\gamma_1$) and $\xi_*^{\mathrm{out}}(y,\omega) = \frac{1}{2}\ln\frac{\sqrt{\omega^2+81}}{4\pi\cosh(2y)}$.
+\item In the heuristic regime $0 \le |\xi| \ll y$ where $\Phi((z-y)/2)$ varies more slowly than $\Phi((z+y)/2)$, $\partial_z\ln G_y^{(1)}(z) \approx \frac{9}{2} - 2\pi\ee^{y+z}$, giving the rough coalescence scale $y_c^{\mathrm{inner}}(\omega) \approx \frac{1}{2}\ln(\frac{\omega}{4\pi}) \approx 0.405379$ at $\omega = 2\gamma_1$ (within $6.2\%$ of the exact root $y_c(2\gamma_1) \approx 0.432021$). Because $n \ge 2$ theta modes and the subleading $-3\pi\ee^{5u}$ term are non-negligible near $u \approx 0$, these $n=1$ expressions serve purely as heuristic guides rather than asymptotic theorems at finite height.
+\end{enumerate}
 
-\begin{lemma}[Closed-form derivatives and Gaussian tail estimate]\label{lem:tail_bound}
-Let $u = \sigma + \ii\tau \in \mathcal{S}_{\pi/8}^{(u)}$, and set $a_n(u) := \pi n^2 \ee^{4u}$ and $P_0(n,u) := 2\pi^2 n^4 \ee^{9u} - 3\pi n^2 \ee^{5u}$. Then for each $n \ge 1$, the $n$-th mode $\phi_n(u) = P_0(n,u)\ee^{-a_n(u)}$ has first and second complex derivatives $\phi_n'(u) = P_1(n,u)\ee^{-a_n(u)}$ and $\phi_n''(u) = P_2(n,u)\ee^{-a_n(u)}$, where
-\begin{align}
-P_1(n,u) &= 18\pi^2 n^4 \ee^{9u} - 15\pi n^2 \ee^{5u} - 4 a_n(u)\,P_0(n,u), \label{eq:P1_app} \\
-P_2(n,u) &= 162\pi^2 n^4 \ee^{9u} - 75\pi n^2 \ee^{5u} - 16 a_n(u)\,P_0(n,u) - 4 a_n(u)\,P_1(n,u) \nonumber \\
-&\quad - 4 a_n(u)\,\left(18\pi^2 n^4 \ee^{9u} - 15\pi n^2 \ee^{5u}\right). \label{eq:P2_app}
-\end{align}
-Moreover, define $\alpha(\sigma,\tau) := \pi\ee^{4\sigma}\cos(4\tau) > 0$. For every integer $N \ge 2$ satisfying $N^2\alpha(\sigma,\tau) \ge 3$, the truncation remainder $R_N(u) := \sum_{n=N+1}^\infty \phi_n(u)$ obeys the explicit upper bound
-\begin{equation}\label{eq:tail_bound_app}
-\big|R_N(u)\big| \le \frac{2\pi^2\ee^{9\sigma} + 3\pi\ee^{5\sigma}}{1 - \exp\!\big(-(2N+1)\alpha(\sigma,\tau)\big)}\,(N+1)^4 \exp\!\Big(-\alpha(\sigma,\tau)\,(N+1)^2\Big).
-\end{equation}
-\end{lemma}
+\section*{Use of AI and Computational Tools}
 
-\begin{proof}
-Since $a_n'(u) = 4a_n(u)$, differentiating $\phi_n(u) = P_0(n,u)\ee^{-a_n(u)}$ via the product rule yields $\phi_n'(u) = (P_0' - 4a_n P_0)\ee^{-a_n} = P_1\ee^{-a_n}$, and differentiating a second time gives $\phi_n''(u) = (P_1' - 4a_n P_1)\ee^{-a_n}$, where $P_1' = P_0'' - 16a_n P_0 - 4a_n P_0'$, which establishes \eqref{eq:P1_app}--\eqref{eq:P2_app}. For the tail bound \eqref{eq:tail_bound_app}, note that the function $t \mapsto t^4\ee^{-\alpha t^2}$ has logarithmic derivative $\frac{4}{t} - 2\alpha t < 0$ for all $t \ge \sqrt{2/\alpha}$. Writing $n = N + 1 + k$ with $k \ge 0$, we have $n^2 = (N+1)^2 + 2(N+1)k + k^2 \ge (N+1)^2 + (2N+1)k$, and since $(1 + \frac{k}{N+1})^4 \exp(-2\alpha k) \le 1$ when $N^2\alpha \ge 3$, the series is bounded by a geometric progression with ratio $\exp(-(2N+1)\alpha(\sigma,\tau))$, yielding \eqref{eq:tail_bound_app}.
-\end{proof}
-
-\section*{Use of AI and computational verification}
-
-In accordance with academic integrity and transparency standards for computer-assisted mathematical research, the author declares the following division between human mathematical formulation and automated verification:
-\begin{itemize}
-\item \textbf{Core mathematical insights formulated by the author:} The mirror-coordinate decomposition $(x=u+v, y=u-v)$ of the transverse Wronskian $W(d,t)$, the identification of the inner kernel $I(y,t) = 2\pi\Wig_\Phi(y,2t)$ with the Wigner phase-space distribution and Hudson's zero-marginal law, the four-step Cauchy contour box architecture inside $|\Ima(x)| < \pi/4$, the Hermitian reflection symmetry $G_y(-\xi+\ii\eta) = \overline{G_y(\xi+\ii\eta)}$, and the discovery of the pitchfork saddle-point coalescence onto the imaginary axis at $y_c(t)$ were conceived and formulated by the author.
-\item \textbf{AI-assisted cross-verification and high-precision computation:} Large language models and automated symbolic/numerical verification environments were employed as adversarial red-team referees to verify convergence hypotheses, check factor-of-$2$ normalizations, and generate the self-contained 60-decimal \texttt{mpmath} verification script (\nolinkurl{scripts/verify_paper1_wigner_saddle_coalescence.py}), which independently confirms every numerical value in Tables~\ref{tab:wall_decay}--\ref{tab:karlin_zeros} and generates Figures~\ref{fig:saddle_coalescence}--\ref{fig:cauchy_and_karlin}.
-\end{itemize}
+Portions of the symbolic algebra exploration, literature cross-checking, \LaTeX{} manuscript preparation, and high-precision Python/\texttt{mpmath} verification script (\nolinkurl{scripts/verify_paper1_wigner_saddle_coalescence.py}) were assisted by \textbf{Gemini} (Google DeepMind). All mathematical proofs, normalizations, counterexample checks, and numerical outputs were independently verified at $50$--$60$ decimal places.
 
 \begin{thebibliography}{99}
 
-\bibitem{ConreyLi2000}
-J.~B.~Conrey and X.-J.~Li, \emph{A note on some positivity conditions related to zeta and $L$-functions}, Internat. Math. Res. Notices \textbf{2000} (2000), no.~18, 929--940.
+\bibitem{ChesterFriedmanUrsell1957}
+C.~Chester, B.~Friedman, and F.~Ursell,
+\emph{An extension of the method of steepest descents},
+Proc.\ Cambridge Philos.\ Soc.\ \textbf{53} (1957), 599--611.
 
-\bibitem{Csordas1986}
-G.~Csordas, T.~S.~Norfolk, and R.~S.~Varga, \emph{The Riemann hypothesis and the Tur\'an inequalities}, Trans. Amer. Math. Soc. \textbf{296} (1986), no.~2, 521--541.
+\bibitem{CsordasNorfolkVarga1986}
+G.~Csordas, T.~S.~Norfolk, and R.~S.~Varga,
+\emph{The Riemann hypothesis and the Tur\'an inequalities},
+Trans.\ Amer.\ Math.\ Soc.\ \textbf{296} (1986), no.~2, 521--541.
 
-\bibitem{deBranges1992}
-L.~de~Branges, \emph{The convergence of Euler products}, J. Funct. Anal. \textbf{107} (1992), no.~1, 122--210.
+\bibitem{DavenportHeilbronn1936}
+H.~Davenport and H.~Heilbronn,
+\emph{On the zeros of certain Dirichlet series. I, II},
+J.\ London Math.\ Soc.\ \textbf{11} (1936), 181--185, 307--312.
 
-\bibitem{Griffin2019}
-M.~Griffin, K.~Ono, L.~Rolen, and D.~Zagier, \emph{Jensen polynomials for the Riemann zeta function and other sequences}, Proc. Natl. Acad. Sci. USA \textbf{116} (2019), no.~23, 11103--11110.
+\bibitem{DeBruijn1950}
+N.~G.~de~Bruijn,
+\emph{The roots of trigonometric integrals},
+Duke Math.\ J.\ \textbf{17} (1950), 197--226.
 
 \bibitem{Hinkkanen1997}
-A.~Hinkkanen, \emph{On functions of bounded type related to the Riemann zeta-function}, J. Number Theory \textbf{65} (1997), no.~1, 109--136.
+A.~Hinkkanen,
+\emph{On functions of bounded type},
+Complex Variables Theory Appl.\ \textbf{34} (1997), no.~1--2, 119--139.
 
 \bibitem{Hudson1974}
-R.~L.~Hudson, \emph{When is the Wigner quasi-probability density non-negative}, Rep. Math. Phys. \textbf{6} (1974), no.~2, 249--252.
+R.~L.~Hudson,
+\emph{When is the Wigner quasi-probability density non-negative?},
+Rep.\ Math.\ Phys.\ \textbf{6} (1974), no.~2, 249--252.
 
 \bibitem{Karlin1968}
-S.~Karlin, \emph{Total Positivity, Vol.~I}, Stanford University Press, Stanford, CA, 1968.
+S.~Karlin,
+\emph{Total Positivity, Vol.~I},
+Stanford Univ.\ Press, Stanford, CA, 1968.
 
 \bibitem{Lagarias1999}
-J.~C.~Lagarias, \emph{On a positivity property of the Riemann $\xi$-function}, Acta Arith. \textbf{89} (1999), no.~3, 217--234.
+J.~C.~Lagarias,
+\emph{On a positivity property of the Riemann $\xi$-function},
+Acta Arith.\ \textbf{89} (1999), no.~3, 217--234.
 
-\bibitem{Lehmer1956}
-D.~H.~Lehmer, \emph{Extended computation of the Riemann zeta-function}, Mathematika \textbf{3} (1956), 102--108.
+\bibitem{Newman1976}
+C.~M.~Newman,
+\emph{Fourier transforms with only real zeros},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{61} (1976), no.~2, 245--251.
+
+\bibitem{Olver1974}
+F.~W.~J.~Olver,
+\emph{Asymptotics and Special Functions},
+Academic Press, New York, 1974.
 
 \bibitem{Polya1926}
-G.~P\'olya, \emph{Bemerkung \"uber die Integraldarstellung der Riemannschen $\xi$-Funktion}, Acta Math. \textbf{48} (1926), 305--317.
+G.~P\'olya,
+\emph{Bemerkung \"uber die Integraldarstellung der Riemannschen $\xi$-Funktion},
+Acta Math.\ \textbf{48} (1926), 305--317.
 
 \bibitem{Riemann1859}
-B.~Riemann, \emph{Ueber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse}, Monatsberichte der Berliner Akademie (1859), 671--680.
+B.~Riemann,
+\emph{Ueber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse},
+Monatsber.\ K\"onigl.\ Preuss.\ Akad.\ Wiss.\ Berlin (1859), 671--680.
 
 \bibitem{Speiser1934}
-A.~Speiser, \emph{Geometrisches zur Riemannschen Zetafunktion}, Math. Ann. \textbf{110} (1934), no.~1, 514--521.
+A.~Speiser,
+\emph{Geometrisches zur Riemannschen Zetafunktion},
+Math.\ Ann.\ \textbf{110} (1934), 514--521.
 
 \bibitem{Titchmarsh1986}
-E.~C.~Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., edited and with a preface by D.~R.~Heath-Brown, Oxford University Press, Oxford, 1986.
+E.~C.~Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D.~R.~Heath-Brown, Oxford Univ.\ Press, Oxford, 1986.
 
 \bibitem{Wigner1932}
-E.~P.~Wigner, \emph{On the quantum correction for thermodynamic equilibrium}, Phys. Rev. \textbf{40} (1932), 749--759.
+E.~Wigner,
+\emph{On the quantum correction for thermodynamic equilibrium},
+Phys.\ Rev.\ \textbf{40} (1932), 749--759.
 
 \end{thebibliography}
 

@@ -1,0 +1,27 @@
+{
+  "title": "Wigner Phase-Space Representation, Shifted Cauchy Contours, and Local Saddle-Point Coalescence in the Transverse Wronskian of Riemann's Xi-Function",
+  "version": "1.1.0",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "access_right": "open",
+  "license": "MIT",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Missiaen, Thijs",
+      "affiliation": "Independent Researcher, Belgium",
+      "orcid": "0009-0007-3678-0810"
+    }
+  ],
+  "description": "We study the phase-space and complex-contour structure of the transverse Wronskian W(d,t) = (1/2) partial_d |Xi(t - i d)|^2 of Riemann's completed zeta function Xi(t - i d) = xi(1/2 + d + i t). First, we express W(d,t) = 16 int_0^infty y sinh(2 d y) I(y,t) dy in terms of the canonical Wigner distribution I(y,t) = 2*pi*W_Phi(y/2, 2t) of the Jacobi-Riemann kernel Phi(u) and show via Hudson's theorem and the zero-marginal identity int_0^infty I(y, gamma_k) dy = 0 that I(y,t) changes sign. Second, we prove holomorphic parity Phi(-u) = Phi(u) on |Im(u)| < pi/8 and double-exponential vertical-wall decay on |Im(z)| < pi/4, showing that horizontal contour shifts preserve I(y,t) by Cauchy's theorem while improving L^1 quadrature conditioning. Third, we derive the local pitchfork normal form for stationary points of ln G_y(z) + 2 i t z away from zeros of Phi(u), locate explicit zeros of Phi(u) inside |Im(u)| < pi/8, and document why this formalism applies equally to functions with off-critical zeros. Includes the complete 10-page AMS-LaTeX manuscript, compiled academic PDF, and 60-decimal mpmath verification suite.",
+  "keywords": [
+    "Riemann Xi-function",
+    "Jacobi theta kernel",
+    "transverse Wronskian",
+    "Wigner phase-space distribution",
+    "Hudson theorem",
+    "Cauchy contour conditioning",
+    "local saddle-point coalescence",
+    "analytic number theory"
+  ]
+}
