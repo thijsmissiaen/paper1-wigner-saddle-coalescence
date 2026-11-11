@@ -1,6 +1,6 @@
 # Wigner Phase-Space Representation, Shifted Cauchy Contours, and Local Saddle-Point Coalescence in the Transverse Wronskian of Riemann's $\Xi$-Function
 
-**DOI (Zenodo / CERN):** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23637324.svg)](https://doi.org/10.5281/zenodo.23637324) [`10.5281/zenodo.23637324`](https://doi.org/10.5281/zenodo.23637324)  
+**DOI (Zenodo / CERN):** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24141130.svg)](https://doi.org/10.5281/zenodo.24141130) [`10.5281/zenodo.24141130`](https://doi.org/10.5281/zenodo.24141130)  
 **Author:** Thijs Missiaen (Independent Researcher, Belgium) &middot; **ORCID:** [`0009-0007-3678-0810`](https://orcid.org/0009-0007-3678-0810)  
 **Repository:** [`https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence`](https://github.com/thijsmissiaen/paper1-wigner-saddle-coalescence)  
 **Manuscript:** [`paper/paper1_wigner_saddle_coalescence.pdf`](./paper/paper1_wigner_saddle_coalescence.pdf) (10 pages; AMS-LaTeX source: [`paper/paper1_wigner_saddle_coalescence.tex`](./paper/paper1_wigner_saddle_coalescence.tex))  
